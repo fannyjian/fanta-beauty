@@ -13,7 +13,7 @@ export default function Profile() {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const {username} = route.params;
+    const {name} = route.params;
 
     return(
         <View style={globalStyles.background}>
@@ -23,7 +23,7 @@ export default function Profile() {
                
             <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
             
-            <Text style = {styles.name}>Welcome, {username}</Text>
+            <Text style = {styles.name}>Welcome, {name + "!"}</Text>
             
             <View style={styles.screenContainer}>
                 <AppButton title="my body" backgroundColor="#007bff" />

@@ -12,7 +12,7 @@ export default function Login( {navigation}) {
         } else if (password.length < 6) {
             alert('Your password must be at least 6 characters long!');
         } else {
-            navigation.navigate('Profile', username);
+            navigation.navigate('Profile', { name: username });
         }
     }
 
@@ -46,9 +46,10 @@ export default function Login( {navigation}) {
             />
             </View>
 
-            <TouchableOpacity>
+            {/* Forgot Password function: not implemented for now */}
+            {/* <TouchableOpacity>
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity style={styles.loginBtn} onPress = {submit} >
                 <Text style={styles.loginText}>LOGIN</Text>
