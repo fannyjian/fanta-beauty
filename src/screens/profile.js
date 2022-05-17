@@ -1,7 +1,9 @@
-import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity,} from "react-native";
+import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity,SafeAreaView} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
 import React, {useState} from "react";
 import { useRoute, useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-ico-material-design';
+import BottomTab from "../tabs/bottomTab";
 
 const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
@@ -16,10 +18,10 @@ export default function Profile() {
     const {name} = route.params;
 
     return(
-        <View style={globalStyles.background}>
-            <Text style = {globalStyles.header}>Profile.</Text>
+        <SafeAreaView style={globalStyles.background}>
+          <Text style = {globalStyles.header}>Profile.</Text>
 
-            <View style = {globalStyles.container}>
+          <View style = {globalStyles.container}>
                
             <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
             
@@ -37,8 +39,10 @@ export default function Profile() {
                 <AppButton title="saved looks" backgroundColor="#007bff" />
             </View>
            
-            </View>
-            </View>
+          </View>
+
+          <BottomTab/>
+        </SafeAreaView>
 );
 }
 

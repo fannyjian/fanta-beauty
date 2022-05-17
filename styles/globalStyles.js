@@ -9,7 +9,7 @@ export const globalStyles = StyleSheet.create({
         flex: 0.12,
         fontFamily: 'AbrilFatface_400Regular', 
         fontSize:60, 
-        margin: 50,
+        margin: 40,
         alignItems: 'baseline',
         backgroundColor: '#F3E9F9',
     },

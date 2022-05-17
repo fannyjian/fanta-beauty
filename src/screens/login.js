@@ -1,6 +1,8 @@
-import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity,} from "react-native";
+import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity, SafeAreaView, Pressable} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
 import React, {useState} from "react";
+import BottomTab from "../tabs/bottomTab";
+//import Icon from 'react-native-ico-material-design';
 
 export default function Login( {navigation}) {
     const [username, setUsername] = useState('');
@@ -17,7 +19,7 @@ export default function Login( {navigation}) {
     }
 
     return(
-        <View style={globalStyles.background}>
+        <SafeAreaView style={globalStyles.background}>
             <Text style = {globalStyles.header}>Login.</Text>
 
             <View style = {globalStyles.container}>
@@ -55,7 +57,9 @@ export default function Login( {navigation}) {
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
             </View>
-        </View>
+
+            <BottomTab/>
+        </SafeAreaView>
         
     );
 }
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         fontFamily: "Avenir",
-        fontSize: 15
+        fontSize: 15,
       },
       forgot_button: {
         height: 30,
@@ -99,5 +103,20 @@ const styles = StyleSheet.create({
     loginText: {
         fontFamily: "Avenir"
     },
-    
+
+    // NavContainer: {
+    //     position: 'absolute',
+    //     alignItems: 'center',
+    //     bottom: 0,
+    //   },
+    //   NavBar: {
+    //     flexDirection:'row',
+    //     backgroundColor: '#DDC2EF',
+    //     width:'100%',
+    //     //justifyContent: 'space-evenly',
+    //     borderRadius: 40
+    //   },
+    // IconBehave: {
+    //     padding: 30,
+    // },
   });
