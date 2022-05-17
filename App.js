@@ -1,20 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Profile from './src/screens/profile'
+import Login from './src/screens/login'
+import LoginNavigator from './src/navigation/loginNavigation';
+import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AbrilFatface_400Regular } from '@expo-google-fonts/abril-fatface';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  let [fontsLoaded, error]= useFonts({
+    AbrilFatface_400Regular 
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if(!fontsLoaded) {
+    return <AppLoading />
+  }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName = "Onboarding">
+        <Stack.Screen name = "Onboarding" component={LoginNavigator} />
+      </Stack.Navigator>
+    </NavigationContainer>
+);
+}
