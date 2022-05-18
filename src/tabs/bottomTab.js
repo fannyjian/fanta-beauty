@@ -1,24 +1,24 @@
 import Icon from 'react-native-ico-material-design';
-import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 
 var iconHeight = 40;
 var iconWidth = 40;
 
-export default function BottomTab() {
+export default function BottomTab({navigation}) {
     return (
         <View style={styles.NavContainer}>
         <View style={styles.NavBar}>
-            <Pressable onPress={() => console.log("favourites")} style={styles.IconBehave}>
+            <TouchableOpacity onPress={() => console.log("favourites")} style={styles.IconBehave}>
             <Icon name="favorite-heart-button"  height={iconHeight} width={iconWidth} color='white'></Icon>
-            </Pressable>
+            </TouchableOpacity>
 
-            <Pressable onPress={() => console.log("shopping cart")} style={styles.IconBehave}>
+            <TouchableOpacity onPress={() => console.log("shopping cart")} style={styles.IconBehave}>
             <Icon name="shopping-cart" height={iconHeight} width={iconWidth} color='white'></Icon>
-            </Pressable>
+            </TouchableOpacity>
 
-            <Pressable onPress={() => console.log("home")} style={styles.IconBehave}>
+            <TouchableOpacity onPress={() => console.log("home")} style={styles.IconBehave}>
             <Icon name="home-button" height={iconHeight} width={iconWidth} color='white'></Icon>
-            </Pressable>
+            </TouchableOpacity>
         </View>
         </View>
     );
