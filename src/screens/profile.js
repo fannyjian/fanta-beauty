@@ -33,12 +33,13 @@ export default function Profile({route, navigation}) {
             </View>
 
             <View style={styles.screenContainer}>
-                <AppButton title="log out" backgroundColor="#007bff" onPress={() => navigation.goBack()}/>
+                <AppButton title="log out" backgroundColor="#007bff" onPress={() => navigation.navigate("Login")}/>
             </View>
 
           </View>
 
-          <BottomTab/>
+          <BottomTab navigation= { navigation }/>
+
         </SafeAreaView>
 );
 }

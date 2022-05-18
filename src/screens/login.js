@@ -2,7 +2,6 @@ import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity, SafeAreaV
 import { globalStyles } from '../../styles/globalStyles';
 import React, {useState} from "react";
 import BottomTab from "../tabs/bottomTab";
-//import Icon from 'react-native-ico-material-design';
 
 export default function Login( {navigation} ) {
     const [username, setUsername] = useState('');
@@ -58,7 +57,7 @@ export default function Login( {navigation} ) {
             </TouchableOpacity>
             </View>
 
-            <BottomTab/>
+            <BottomTab navigation= { navigation }/>
         </SafeAreaView>
         
     );

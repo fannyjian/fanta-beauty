@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, Fla
 var iconHeight = 40;
 var iconWidth = 40;
 
-export default function BottomTab({navigation}) {
+
+export default function BottomTab({route, navigation}) {
     return (
         <View style={styles.NavContainer}>
         <View style={styles.NavBar}>
@@ -16,7 +17,7 @@ export default function BottomTab({navigation}) {
             <Icon name="shopping-cart" height={iconHeight} width={iconWidth} color='white'></Icon>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => console.log("home")} style={styles.IconBehave}>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.IconBehave}>
             <Icon name="home-button" height={iconHeight} width={iconWidth} color='white'></Icon>
             </TouchableOpacity>
         </View>
