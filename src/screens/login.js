@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import BottomTab from "../tabs/bottomTab";
 //import Icon from 'react-native-ico-material-design';
 
-export default function Login( {navigation}) {
+export default function Login( {navigation} ) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 

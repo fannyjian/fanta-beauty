@@ -1,7 +1,6 @@
 import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity,SafeAreaView} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
 import React, {useState} from "react";
-import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-ico-material-design';
 import BottomTab from "../tabs/bottomTab";
 
@@ -11,9 +10,7 @@ const AppButton = ({ onPress, title }) => (
     </TouchableOpacity>
   );
 
-export default function Profile() {
-    const navigation = useNavigation();
-    const route = useRoute();
+export default function Profile({route, navigation}) {
 
     const {name} = route.params;
 
@@ -36,9 +33,9 @@ export default function Profile() {
             </View>
 
             <View style={styles.screenContainer}>
-                <AppButton title="saved looks" backgroundColor="#007bff" />
+                <AppButton title="log out" backgroundColor="#007bff" onPress={() => navigation.goBack()}/>
             </View>
-           
+
           </View>
 
           <BottomTab/>
