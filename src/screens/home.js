@@ -1,15 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList } from 'react-native';
-import { 
-  AbrilFatface_400Regular 
-} from '@expo-google-fonts/abril-fatface';
-
+import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList, Button } from 'react-native';
+import { AbrilFatface_400Regular } from '@expo-google-fonts/abril-fatface';
+import React, {useState} from "react";
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import Icon from 'react-native-ico-material-design';
+import BottomTab from "../tabs/bottomTab";
 
-var iconHeight = 40;
-var iconWidth = 40;
 const data = [
   'https://cdn-images.farfetch-contents.com/18/41/36/44/18413644_39547459_1000.jpg',
   'https://cdn-static.farfetch-contents.com/cms-cm/sg/media/3536972/data/096e98e92c3d2ff52d07b3ebf0dc56c4.jpg?ratio=1x1_messaging-side&minWidth=637',
@@ -22,14 +18,7 @@ const { width, height } = Dimensions.get('screen');
 const imageW = width;
 const imageH = height * 0.6;
 
-export default function App() {
-  let [fontsLoaded, error]= useFonts({
-    AbrilFatface_400Regular 
-  });
-
-  if(!fontsLoaded) {
-    return <AppLoading />
-  }
+export default function Home({navigation}) {
 
   return (
     <SafeAreaView style={styles.background}>
@@ -68,21 +57,7 @@ export default function App() {
     fanta beauty.</Text></View>
     </View>
 
-    <View style={styles.NavContainer}>
-      <View style={styles.NavBar}>
-        <Pressable onPress={() => console.log("favourites")} style={styles.IconBehave}>
-          <Icon name="favorite-heart-button"  height={iconHeight} width={iconWidth} color='white'></Icon>
-        </Pressable>
-
-        <Pressable onPress={() => console.log("shopping cart")} style={styles.IconBehave}>
-          <Icon name="shopping-cart" height={iconHeight} width={iconWidth} color='white'></Icon>
-        </Pressable>
-
-        <Pressable onPress={() => console.log("home")} style={styles.IconBehave}>
-          <Icon name="home-button" height={iconHeight} width={iconWidth} color='white'></Icon>
-        </Pressable>
-      </View>
-    </View>
+    <BottomTab navigation= { navigation }/>
 
     </SafeAreaView>
 );
