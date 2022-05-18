@@ -22,7 +22,7 @@ const { width, height } = Dimensions.get('screen');
 const imageW = width;
 const imageH = height * 0.6;
 
-export default function App() {
+export default function Home() {
   let [fontsLoaded, error]= useFonts({
     AbrilFatface_400Regular 
   });
