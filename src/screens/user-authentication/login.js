@@ -1,9 +1,9 @@
 import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity, SafeAreaView, Pressable} from "react-native";
-import { globalStyles } from '../../styles/globalStyles';
+import { globalStyles } from '../../../styles/globalStyles';
 import React, {useState} from "react";
-import BottomTab from "../tabs/bottomTab";
+import BottomTab from "../../tabs/bottomTab";
 
-export default function Login( {navigation} ) {
+export default function Login( {route, navigation} ) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -13,7 +13,7 @@ export default function Login( {navigation} ) {
         } else if (password.length < 6) {
             alert('Your password must be at least 6 characters long!');
         } else {
-            navigation.navigate('Profile', { name: username });
+            navigation.navigate('Profile', {name: username});
         }
     }
 
@@ -23,7 +23,7 @@ export default function Login( {navigation} ) {
 
             <View style = {globalStyles.container}>
           
-            <Image style = {styles.image} source = {require("../../assets/login-logo.png")}/>
+            <Image style = {styles.image} source = {require("../../../assets/login-logo.png")}/>
 
             <View style={styles.inputView}>
             <TextInput
@@ -57,7 +57,7 @@ export default function Login( {navigation} ) {
             </TouchableOpacity>
             </View>
 
-            <BottomTab navigation= { navigation }/>
+            {/* <BottomTab navigation = { navigation }/> */}
         </SafeAreaView>
         
     );
@@ -102,20 +102,4 @@ const styles = StyleSheet.create({
     loginText: {
         fontFamily: "Avenir"
     },
-
-    // NavContainer: {
-    //     position: 'absolute',
-    //     alignItems: 'center',
-    //     bottom: 0,
-    //   },
-    //   NavBar: {
-    //     flexDirection:'row',
-    //     backgroundColor: '#DDC2EF',
-    //     width:'100%',
-    //     //justifyContent: 'space-evenly',
-    //     borderRadius: 40
-    //   },
-    // IconBehave: {
-    //     padding: 30,
-    // },
   });

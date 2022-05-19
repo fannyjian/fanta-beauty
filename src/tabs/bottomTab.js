@@ -6,18 +6,19 @@ var iconWidth = 40;
 
 
 export default function BottomTab({route, navigation}) {
+
     return (
         <View style={styles.NavContainer}>
         <View style={styles.NavBar}>
             <TouchableOpacity onPress={() => console.log("favourites")} style={styles.IconBehave}>
-            <Icon name="favorite-heart-button"  height={iconHeight} width={iconWidth} color='white'></Icon>
+            <Icon name="favourite-heart-button"  height={iconHeight} width={iconWidth} color='white'></Icon>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => console.log("shopping cart")} style={styles.IconBehave}>
             <Icon name="shopping-cart" height={iconHeight} width={iconWidth} color='white'></Icon>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.IconBehave}>
+            <TouchableOpacity onPress={() => navigation.navigate("Home")} style={styles.IconBehave}>
             <Icon name="home-button" height={iconHeight} width={iconWidth} color='white'></Icon>
             </TouchableOpacity>
         </View>

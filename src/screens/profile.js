@@ -29,6 +29,10 @@ export default function Profile({route, navigation}) {
             </View>
 
             <View style={styles.screenContainer}>
+                <AppButton title="saved looks" backgroundColor="#007bff" />
+            </View>
+
+            <View style={styles.screenContainer}>
                 <AppButton title="wishlist" backgroundColor="#007bff" />
             </View>
 

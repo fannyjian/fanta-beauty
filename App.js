@@ -1,6 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import Profile from './src/screens/profile'
-import Login from './src/screens/login'
 import LoginNavigator from './src/navigation/loginNavigation';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

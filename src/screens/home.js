@@ -1,9 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList, Button } from 'react-native';
-import { AbrilFatface_400Regular } from '@expo-google-fonts/abril-fatface';
 import React, {useState} from "react";
-import { useFonts } from 'expo-font';
-import AppLoading from 'expo-app-loading';
 import BottomTab from "../tabs/bottomTab";
 
 const data = [
@@ -18,11 +15,13 @@ const { width, height } = Dimensions.get('screen');
 const imageW = width;
 const imageH = height * 0.6;
 
-export default function Home({navigation}) {
+export default function Home({route, navigation}) {
 
   return (
     <SafeAreaView style={styles.background}>
-      <View><Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:60, margin: 10, left: 20}}>Hey!</Text></View>
+      <View>
+        <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:60, margin: 10, left: 20}}>Hey!</Text>
+      </View>
 
     <View>
       <FlatList 
@@ -32,14 +31,14 @@ export default function Home({navigation}) {
       pagingEnabled
       renderItem={({item}) => {
         return <View style={{width}}>
-          <Image source={{uri : item}} style={{
-            width: imageW,
-            height: imageH,
-            resizeMode: 'cover',
-            borderRadius:80,
-            alignItems: 'center'
-          }}/>
-          </View>
+                <Image source={{uri : item}} style={{
+                  width: imageW,
+                  height: imageH,
+                  resizeMode: 'cover',
+                  borderRadius:80,
+                  alignItems: 'center'
+                }}/>
+              </View>
       }}
       />
 
@@ -53,8 +52,10 @@ export default function Home({navigation}) {
         ))}
       </View>
       
-    <View><Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:25, margin: 6, color: 'white', shadowColor: 'black', shadowOffset: {width: 5, height: 5}, shadowOpacity: 0.4, shadowRadius: 3, left:190}}>welcome to {'\n'}
-    fanta beauty.</Text></View>
+    <View>
+      <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:25, margin: 6, color: 'white', shadowColor: 'black', shadowOffset: {width: 5, height: 5}, shadowOpacity: 0.4, shadowRadius: 3, left:190}}>welcome to {'\n'}
+    fanta beauty.</Text>
+    </View>
     </View>
 
     <BottomTab navigation= { navigation }/>
@@ -72,21 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  NavContainer: {
-    position: 'absolute',
-    alignItems: 'center',
-    bottom: 0,
-  },
-  NavBar: {
-    flexDirection:'row',
-    backgroundColor: '#DDC2EF',
-    width:'100%',
-    justifyContent: 'space-evenly',
-    borderRadius: 40
-  },
-  IconBehave: {
-    padding: 30,
-  },
+
   circleDiv: {
     position: 'absolute',
     bottom: 90,
