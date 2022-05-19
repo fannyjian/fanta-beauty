@@ -1,29 +1,35 @@
 import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity, SafeAreaView, Pressable} from "react-native";
-import { globalStyles } from '../../../styles/globalStyles';
-import React, {useState} from "react";
-import BottomTab from "../../tabs/bottomTab";
+import { globalStyles } from '../../styles/globalStyles';
+import * as React from 'react';
+import { useState } from "react";
+import { AuthContext } from "../../App";
+import AsyncStorage, {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
-export default function Login( {route, navigation} ) {
+
+export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const submit = () => {
+    const { signIn } = React.useContext(AuthContext);
+
+    const login = () => {
         if (username.length < 1) {
             alert('Please provide enter a username!');
         } else if (password.length < 6) {
             alert('Your password must be at least 6 characters long!');
         } else {
-            navigation.navigate('Profile', {name: username});
+            signIn({ username, password });        
         }
     }
 
     return(
+
         <SafeAreaView style={globalStyles.background}>
             <Text style = {globalStyles.header}>Login.</Text>
 
             <View style = {globalStyles.container}>
           
-            <Image style = {styles.image} source = {require("../../../assets/login-logo.png")}/>
+            <Image style = {styles.image} source = {require("../../assets/login-logo.png")}/>
 
             <View style={styles.inputView}>
             <TextInput
@@ -52,7 +58,7 @@ export default function Login( {route, navigation} ) {
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity> */}
 
-            <TouchableOpacity style={styles.loginBtn} onPress = {submit} >
+            <TouchableOpacity style={styles.loginBtn} onPress = {login} >
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
             </View>
