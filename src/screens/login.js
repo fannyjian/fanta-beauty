@@ -3,8 +3,6 @@ import { globalStyles } from '../../styles/globalStyles';
 import * as React from 'react';
 import { useState } from "react";
 import { AuthContext } from "../../App";
-import AsyncStorage, {useAsyncStorage} from '@react-native-async-storage/async-storage';
-
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -23,7 +21,6 @@ export default function Login() {
     }
 
     return(
-
         <SafeAreaView style={globalStyles.background}>
             <Text style = {globalStyles.header}>Login.</Text>
 
