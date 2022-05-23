@@ -6,7 +6,6 @@ import BottomTab from "../tabs/bottomTab";
 import { AuthContext } from "../../App";
 import AsyncStorage, {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
-
 const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
       <Text style={styles.appButtonText}>{title}</Text>
@@ -20,7 +19,7 @@ const LogoutButton = ({ onPress, title }) => (
   );
 
 
-export default function Profile({navigation}) {
+export default function Profile({route, navigation}) {
     const { signOut } = React.useContext(AuthContext);
 
     return(

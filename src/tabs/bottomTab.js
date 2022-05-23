@@ -5,7 +5,7 @@ var iconHeight = 40;
 var iconWidth = 40;
 
 
-export default function BottomTab({navigation}) {
+export default function BottomTab({route, navigation}) {
 
     return (
         <View style={styles.NavContainer}>

@@ -50,17 +50,15 @@ export default function Login() {
             />
             </View>
 
-            {/* Forgot Password function: not implemented for now */}
-            {/* <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
-            </TouchableOpacity> */}
+            <TouchableOpacity>
+                <Text style={styles.forgot_button} onPress = {() => console.log('forgot password function not available yet :)')}>Forgot Password?</Text>
+            </TouchableOpacity> 
 
             <TouchableOpacity style={styles.loginBtn} onPress = {login} >
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
             </View>
 
-            {/* <BottomTab navigation = { navigation }/> */}
         </SafeAreaView>
         
     );
@@ -89,9 +87,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
       },
       forgot_button: {
-        height: 30,
-        marginBottom: 30,
-        fontSize: 10
+        height: 40,
+        fontSize: 12,
+        fontFamily: "Avenir",
       },
       loginBtn:{
         width:"80%",
