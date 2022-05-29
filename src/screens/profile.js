@@ -1,8 +1,10 @@
-import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity,SafeAreaView} from "react-native";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet,Text,View,Image,TouchableOpacity,SafeAreaView} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
 import React, {useState} from "react";
-import Icon from 'react-native-ico-material-design';
 import BottomTab from "../tabs/bottomTab";
+import { AuthContext } from "../../App";
+import AsyncStorage, {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
 const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
@@ -10,9 +12,15 @@ const AppButton = ({ onPress, title }) => (
     </TouchableOpacity>
   );
 
-export default function Profile({route, navigation}) {
+const LogoutButton = ({ onPress, title }) => (
+    <TouchableOpacity onPress={onPress}>
+      <Text style={styles.logoutButtonText}>{title}</Text>
+    </TouchableOpacity>
+  );
 
-    const {name} = route.params;
+
+export default function Profile({route, navigation}) {
+    const { signOut } = React.useContext(AuthContext);
 
     return(
         <SafeAreaView style={globalStyles.background}>
@@ -22,7 +30,7 @@ export default function Profile({route, navigation}) {
                
             <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
             
-            <Text style = {styles.name}>Welcome, {name + "!"}</Text>
+            <Text style = {styles.name}>name</Text>
             
             <View style={styles.screenContainer}>
                 <AppButton title="my body" backgroundColor="#007bff" />
@@ -37,33 +45,33 @@ export default function Profile({route, navigation}) {
             </View>
 
             <View style={styles.screenContainer}>
-                <AppButton title="log out" backgroundColor="#007bff" onPress={() => navigation.navigate("Login")}/>
+                <LogoutButton title="log out" backgroundColor="#007bff" onPress={signOut}/>
             </View>
 
-          </View>
+          </View> 
 
-          <BottomTab navigation= { navigation }/>
+        <BottomTab navigation= { navigation }/>
 
         </SafeAreaView>
 );
-}
+};
 
 const styles = StyleSheet.create({
     image :{
-        flex: 0.5,
-        width: 300,
-        height: 300,
+        flex: 0.6,
+        width: 350,
+        height: 350,
         justifyContent: 'flex-end'
     },
     name: {
         fontSize: 20,
         fontFamily: "AbrilFatface_400Regular",
         color: "black",
-        borderBottomWidth: 20,
+        borderBottomWidth: 25,
     },
     screenContainer: {
         justifyContent: "flex-start",
-        padding: 16
+        padding: 16,
       },
       appButtonContainer: {
         width: 300,
@@ -75,6 +83,12 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontFamily: "AbrilFatface_400Regular",
         color: "black",
+        alignSelf: "center",
+      },
+      logoutButtonText: {
+        fontSize: 20,
+        fontFamily: "AbrilFatface_400Regular",
+        color: "#DDC2EF",
         alignSelf: "center",
       }
 });

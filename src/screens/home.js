@@ -15,7 +15,8 @@ const { width, height } = Dimensions.get('screen');
 const imageW = width;
 const imageH = height * 0.6;
 
-export default function Home({route, navigation}) {
+export default function Home({navigation}) {
+
 
   return (
     <SafeAreaView style={styles.background}>
@@ -58,7 +59,7 @@ export default function Home({route, navigation}) {
     </View>
     </View>
 
-    <BottomTab navigation= { navigation }/>
+    <BottomTab navigation = {navigation }/>
 
     </SafeAreaView>
 );
