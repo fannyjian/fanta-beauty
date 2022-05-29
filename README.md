@@ -1,3 +1,6 @@
+# Level of Achievement
+Apollo 11
+
 # About Fanta Beauty
 Fanta Beauty is a fashion platform that helps users purchase fitting and ideal fashion apparel online in a quick and fuss-free way. It provides the users a virtual fitting room with the implementation of a clothes scanner and a virtual model, for our target audience to try on clothes virtually, such that they can make wise purchases. You can easily add clothes in the wishlist and get fashion tips as well as information on the latest trends.
 
