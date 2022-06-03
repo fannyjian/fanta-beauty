@@ -118,10 +118,6 @@ export default function App() {
           : state.userToken == null && fontsLoaded ? (
             <Stack.Group options={{animationTypeForReplace: state.isSignout ? 'pop' : 'push',}} component = 'WelcomeScreen'>
               <Stack.Screen
-                name="WelcomeScreen"
-                component={Welcome}
-              />
-              <Stack.Screen
                 name="LoginScreen"
                 component={Login}
               />
