@@ -91,8 +91,15 @@ Install npm/yarn on https://nodejs.org/en/  or https://classic.yarnpkg.com/lang/
 Download zip from this github repository https://github.com/fannyjian/fanta-beauty.
 
 On your terminal, change to the directory fanta-beauty-main and run:
-‘npm install’ or ‘yarn install’
-‘npm start’ or ‘yarn start’
+```
+npm install
+npm start
+```
+or 
+```
+yarn install
+yarn start
+```
 
 Download the Expo app on your iPhone.
 
