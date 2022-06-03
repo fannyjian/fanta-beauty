@@ -1,8 +1,6 @@
 
 import * as React from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 // Imports for loading font
 import { AbrilFatface_400Regular } from '@expo-google-fonts/abril-fatface';
@@ -12,10 +10,11 @@ import AppLoading from 'expo-app-loading';
 // Imports for navigations
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import LoginNavigator from './src/navigation/loginNavigation';
+// import HomeNavigator from './src/navigation/homeNavigation';
 import Home from './src/screens/home';
 import Profile from './src/screens/profile';
 import Login from './src/screens/login';
-import Welcome from './src/screens/welcome';
 
 export const AuthContext = React.createContext();
 
@@ -31,23 +30,10 @@ const Stack = createNativeStackNavigator();
 
 
 export default function App() {
-  const firebaseConfig = {
-    apiKey: "AIzaSyA0nT_FejM8tVJ5lAzd_uz0Nw4jgAIBb88",
-    authDomain: "fanta-beauty-fc716.firebaseapp.com",
-    projectId: "fanta-beauty-fc716",
-    storageBucket: "fanta-beauty-fc716.appspot.com",
-    messagingSenderId: "1075869773533",
-    appId: "1:1075869773533:web:fc11334bf291c7c4f1b534",
-    measurementId: "G-NKY6X96JJG"
-  };
-  
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
   let [fontsLoaded, error]= useFonts({
     AbrilFatface_400Regular 
   });
+
   
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
@@ -92,14 +78,14 @@ export default function App() {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async () => {
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token',});
+      signIn: async (data) => {
+        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
       },
 
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
 
-      signUp: async () => {
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token', });
+      signUp: async (data) => {
+        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
       },
 
     }),
@@ -116,18 +102,16 @@ export default function App() {
           {(state.isLoading) ? (<Stack.Screen name="Splash" component={SplashScreen} />) 
           
           : state.userToken == null && fontsLoaded ? (
-            <Stack.Group options={{animationTypeForReplace: state.isSignout ? 'pop' : 'push',}} component = 'WelcomeScreen'>
-              <Stack.Screen
-                name="WelcomeScreen"
-                component={Welcome}
-              />
+            <Stack.Group>
               <Stack.Screen
                 name="LoginScreen"
                 component={Login}
+                options={{animationTypeForReplace: state.isSignout ? 'pop' : 'push',}}
               />
             </Stack.Group>)
               
           : (
+            // <Stack.Screen name="HomeNav" component={HomeNavigator} />
             <Stack.Group>
               <Stack.Screen name = "HomeScreen" component={Home} />
               <Stack.Screen name = "ProfileScreen" component = {Profile} />
