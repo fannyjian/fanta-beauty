@@ -102,7 +102,7 @@ export default function App() {
           {(state.isLoading) ? (<Stack.Screen name="Splash" component={SplashScreen} />) 
           
           : state.userToken == null && fontsLoaded ? (
-            <Stack.Group>
+            <Stack.Group options={{animationTypeForReplace: state.isSignout ? 'pop' : 'push',}} component = 'WelcomeScreen'>
               <Stack.Screen
                 name="LoginScreen"
                 component={Login}
