@@ -4,6 +4,7 @@ import { globalStyles } from '../../styles/globalStyles';
 import React, {useState} from "react";
 import BottomTab from "../tabs/bottomTab";
 import { AuthContext } from "../../App";
+import AsyncStorage, {useAsyncStorage} from '@react-native-async-storage/async-storage';
 
 const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
@@ -18,7 +19,7 @@ const LogoutButton = ({ onPress, title }) => (
   );
 
 
-export default function Profile({ navigation}) {
+export default function Profile({route, navigation}) {
     const { signOut } = React.useContext(AuthContext);
 
     return(
@@ -29,7 +30,7 @@ export default function Profile({ navigation}) {
                
             <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
             
-            <Text style = {styles.name}></Text>
+            <Text style = {styles.name}>name</Text>
             
             <View style={styles.screenContainer}>
                 <AppButton title="my body" backgroundColor="#007bff" />

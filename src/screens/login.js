@@ -51,13 +51,12 @@ export default function Login() {
             </View>
 
             <TouchableOpacity>
-                <Text style={styles.forgotBtn} onPress = {() => console.log('forgot password function not available yet :)')}>Forgot Password?</Text>
+                <Text style={styles.forgot_button} onPress = {() => console.log('forgot password function not available yet :)')}>Forgot Password?</Text>
             </TouchableOpacity> 
 
             <TouchableOpacity style={styles.loginBtn} onPress = {login} >
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
-
             </View>
 
         </SafeAreaView>
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
         fontFamily: "Avenir",
         fontSize: 15,
       },
-      forgotBtn: {
+      forgot_button: {
         height: 40,
         fontSize: 12,
         fontFamily: "Avenir",
