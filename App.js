@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { Button, Text, TextInput, View } from 'react-native';
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 // Imports for loading font
 import { AbrilFatface_400Regular } from '@expo-google-fonts/abril-fatface';
@@ -43,7 +42,6 @@ export default function App() {
   
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
 
   let [fontsLoaded, error]= useFonts({
     AbrilFatface_400Regular 
