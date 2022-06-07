@@ -1,5 +1,5 @@
 import { StyleSheet,Text,View,Image,TouchableOpacity, SafeAreaView} from "react-native";
-import { globalStyles } from '../../styles/globalStyles';
+import { globalStyles } from '../../../styles/globalStyles';
 import * as React from 'react';
 import { useNavigation } from "@react-navigation/native";
 
@@ -8,17 +8,17 @@ export default function Welcome() {
     const navigation = useNavigation();
     return(
         <SafeAreaView style={globalStyles.background}>
-            {/* <Text style = {globalStyles.header}>Welcome.</Text> */}
+            <Text style = {globalStyles.header}>Welcome.</Text>
 
             <View style = {globalStyles.container}>
           
-            <Image style = {styles.image} source = {require("../../assets/welcome-logo.png")}/>
+            <Image style = {styles.image} source = {require("../../../assets/welcome-logo.png")}/>
 
             <TouchableOpacity style={styles.loginBtn} onPress = {() => navigation.navigate('LoginScreen')}>
                 <Text style={styles.loginText}>login.</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginBtn}>
+            <TouchableOpacity style={styles.loginBtn} onPress = {() => navigation.navigate('RegisterScreen')}>
                 <Text style={styles.loginText}>register.</Text>
             </TouchableOpacity>
 
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     image :{
       width: 300,
       height: 450,
-      marginTop: 80,
+      marginTop: -30,
     },
       loginBtn:{
         width:"80%",
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         height:50,
         alignItems:"center",
         justifyContent:"center",
-        marginTop:30,
+        marginTop:10,
         backgroundColor:"#DDC2EF",
     },
     loginText: {

@@ -1,23 +1,32 @@
 import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity, SafeAreaView, Pressable} from "react-native";
-import { globalStyles } from '../../styles/globalStyles';
+import { globalStyles } from '../../../styles/globalStyles';
 import * as React from 'react';
 import { useState } from "react";
-import { AuthContext } from "../../App";
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
-export default function Login() {
-    const [username, setUsername] = useState('');
+export default function Login({navigation}) {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const { signIn } = React.useContext(AuthContext);
-
-    const login = () => {
-        if (username.length < 1) {
-            alert('Please provide enter a username!');
-        } else if (password.length < 6) {
-            alert('Your password must be at least 6 characters long!');
-        } else {
-            signIn({ username, password });        
-        }
+    const auth = getAuth(); 
+    const handleLogin = () => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if (errorCode == "auth/invalid-email") {
+                alert('Please enter a valid email!')
+            }
+            if (errorCode == "auth/user-not-found") {
+                alert('No records found:( \n Have you created an account yet?')
+            }
+            if (errorCode == "auth/wrong-password") {
+                alert('Wrong password!')
+            }
+        });
     }
 
     return(
@@ -26,16 +35,16 @@ export default function Login() {
 
             <View style = {globalStyles.container}>
           
-            <Image style = {styles.image} source = {require("../../assets/login-logo.png")}/>
+            <Image style = {styles.image} source = {require("../../../assets/login-logo.png")}/>
 
             <View style={styles.inputView}>
             <TextInput
                 style={styles.TextInput}
-                placeholder="Username."
+                placeholder="Email."
                 placeholderTextColor="black"
-                onChangeText={(name) => setUsername(name)}
+                onChangeText={(name) => setEmail(name)}
                 autoCorrect = {false}
-                value = {username}
+                value = {email}
             />
             </View>
             
@@ -51,13 +60,16 @@ export default function Login() {
             </View>
 
             <TouchableOpacity>
-                <Text style={styles.forgotBtn} onPress = {() => console.log('forgot password function not available yet :)')}>Forgot Password?</Text>
+                <Text style={styles.forgot_button} onPress = {() => console.log('forgot password function not available yet :)')}>Forgot Password?</Text>
             </TouchableOpacity> 
 
-            <TouchableOpacity style={styles.loginBtn} onPress = {login} >
+            <TouchableOpacity style={styles.loginBtn} onPress = {handleLogin} >
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity>
+                <Text style={styles.goBack_button} onPress = {() => navigation.goBack()}>Back to Welcome Page</Text>
+            </TouchableOpacity> 
             </View>
 
         </SafeAreaView>
@@ -87,7 +99,7 @@ const styles = StyleSheet.create({
         fontFamily: "Avenir",
         fontSize: 15,
       },
-      forgotBtn: {
+      forgot_button: {
         height: 40,
         fontSize: 12,
         fontFamily: "Avenir",
@@ -98,10 +110,15 @@ const styles = StyleSheet.create({
         height:50,
         alignItems:"center",
         justifyContent:"center",
-        marginTop:40,
+        marginTop:20,
         backgroundColor:"#DDC2EF",
     },
     loginText: {
         fontFamily: "Avenir"
     },
+    goBack_button: {
+        marginTop: 10,
+        fontSize: 12,
+        fontFamily: "Avenir",
+      },
   });

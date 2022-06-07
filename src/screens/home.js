@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList, Button } from 'react-native';
 import React, {useState} from "react";
 import BottomTab from "../tabs/bottomTab";
+import { useNavigation } from '@react-navigation/native';
 
 const data = [
   'https://cdn-images.farfetch-contents.com/18/41/36/44/18413644_39547459_1000.jpg',
@@ -15,9 +16,9 @@ const { width, height } = Dimensions.get('screen');
 const imageW = width;
 const imageH = height * 0.6;
 
-export default function Home({navigation}) {
+export default function Home() {
 
-
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.background}>
       <View>
@@ -59,7 +60,7 @@ export default function Home({navigation}) {
     </View>
     </View>
 
-    <BottomTab navigation = {navigation }/>
+    {/* <BottomTab navigation = {navigation }/> */}
 
     </SafeAreaView>
 );

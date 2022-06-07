@@ -3,7 +3,9 @@ import { StyleSheet,Text,View,Image,TouchableOpacity,SafeAreaView} from "react-n
 import { globalStyles } from '../../styles/globalStyles';
 import React, {useState} from "react";
 import BottomTab from "../tabs/bottomTab";
-import { AuthContext } from "../../App";
+import { getAuth } from 'firebase/auth';
+import { useNavigation } from '@react-navigation/native';
+
 
 const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
@@ -18,41 +20,46 @@ const LogoutButton = ({ onPress, title }) => (
   );
 
 
-export default function Profile({ navigation}) {
-    const { signOut } = React.useContext(AuthContext);
+export default function Profile() {
+  const navigation = useNavigation();
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const name = user.displayName;
 
-    return(
-        <SafeAreaView style={globalStyles.background}>
-          <Text style = {globalStyles.header}>Profile.</Text>
+  const signOut = () => auth.signOut().then(() => console.log('user signed out'));
 
-          <View style = {globalStyles.container}>
-               
-            <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
-            
-            <Text style = {styles.name}></Text>
-            
-            <View style={styles.screenContainer}>
-                <AppButton title="my body" backgroundColor="#007bff" />
-            </View>
+  return(
+      <SafeAreaView style={globalStyles.background}>
+        <Text style = {globalStyles.header}>Profile.</Text>
 
-            <View style={styles.screenContainer}>
-                <AppButton title="saved looks" backgroundColor="#007bff" />
-            </View>
+        <View style = {globalStyles.container}>
+              
+          <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
+          
+          <Text style = {styles.name}>{name}</Text>
+          
+          <View style={styles.screenContainer}>
+              <AppButton title="my body" backgroundColor="#007bff" />
+          </View>
 
-            <View style={styles.screenContainer}>
-                <AppButton title="wishlist" backgroundColor="#007bff" />
-            </View>
+          <View style={styles.screenContainer}>
+              <AppButton title="saved looks" backgroundColor="#007bff" />
+          </View>
 
-            <View style={styles.screenContainer}>
-                <LogoutButton title="log out" backgroundColor="#007bff" onPress={signOut}/>
-            </View>
+          <View style={styles.screenContainer}>
+              <AppButton title="wishlist" backgroundColor="#007bff" onPress = {() => console.log(name)}/>
+          </View>
 
-          </View> 
+          <View style={styles.screenContainer}>
+              <LogoutButton title="log out" backgroundColor="#007bff" onPress = {signOut} />
+          </View>
 
-        <BottomTab navigation= { navigation }/>
+        </View> 
 
-        </SafeAreaView>
-);
+      {/* <BottomTab navigation= { navigation }/> */}
+
+      </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
