@@ -1,8 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList, Button } from 'react-native';
-import React, {useState} from "react";
-import BottomTab from "../tabs/bottomTab";
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, View, Image, SafeAreaView, Dimensions, FlatList } from 'react-native';
+import React from "react";
 
 const data = [
   'https://cdn-images.farfetch-contents.com/18/41/36/44/18413644_39547459_1000.jpg',
@@ -17,51 +14,46 @@ const imageW = width;
 const imageH = height * 0.6;
 
 export default function Home() {
-
-  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.background}>
       <View>
         <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:60, margin: 10, left: 20}}>Hey!</Text>
       </View>
 
-    <View>
-      <FlatList 
-      data={data}
-      keyExtractor={(_, index) => index.toString()}
-      horizontal
-      pagingEnabled
-      renderItem={({item}) => {
-        return <View style={{width}}>
-                <Image source={{uri : item}} style={{
-                  width: imageW,
-                  height: imageH,
-                  resizeMode: 'cover',
-                  borderRadius:80,
-                  alignItems: 'center'
-                }}/>
-              </View>
-      }}
-      />
+      <View>
+        <FlatList 
+        data={data}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        renderItem={({item}) => {
+          return <View style={{width}}>
+                  <Image source={{uri : item}} style={{
+                    width: imageW,
+                    height: imageH,
+                    resizeMode: 'cover',
+                    borderRadius:80,
+                    alignItems: 'center'
+                  }}/>
+                </View>
+        }}
+        />
 
-      <View style={styles.circleDiv}>
-        {data.map(( item, i ) => (
-          <View
-          key={item}
-          style={[styles.whiteCircle,
-          ]}
-          />
-        ))}
+        <View style={styles.circleDiv}>
+          {data.map(( item, i ) => (
+            <View
+            key={item}
+            style={[styles.whiteCircle,
+            ]}
+            />
+          ))}
+        </View>
+        
+      <View>
+        <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:25, margin: 6, color: 'white', shadowColor: 'black', shadowOffset: {width: 5, height: 5}, shadowOpacity: 0.4, shadowRadius: 3, left:190}}>welcome to {'\n'}
+      fanta beauty.</Text>
       </View>
-      
-    <View>
-      <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:25, margin: 6, color: 'white', shadowColor: 'black', shadowOffset: {width: 5, height: 5}, shadowOpacity: 0.4, shadowRadius: 3, left:190}}>welcome to {'\n'}
-    fanta beauty.</Text>
-    </View>
-    </View>
-
-    {/* <BottomTab navigation = {navigation }/> */}
-
+      </View>
     </SafeAreaView>
 );
 }

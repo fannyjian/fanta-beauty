@@ -46,6 +46,7 @@ export default function Login({navigation}) {
                 onChangeText={(name) => setEmail(name)}
                 autoCorrect = {false}
                 value = {email}
+                keyboardType = 'email-address'
             />
             </View>
             
@@ -92,8 +93,7 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 20,
         alignItems: "center",
-      },
-      
+      },   
       TextInput: {
         height: 50,
         flex: 1,
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
       },
       forgot_button: {
-        height: 40,
-        fontSize: 12,
+        height: 50,
+        fontSize: 13,
         fontFamily: "Avenir",
       },
       loginBtn:{
@@ -116,11 +116,12 @@ const styles = StyleSheet.create({
         backgroundColor:"#DDC2EF",
     },
     loginText: {
-        fontFamily: "Avenir"
+        fontFamily: "Avenir",
+        fontSize: 16,
     },
     goBack_button: {
         marginTop: 10,
-        fontSize: 12,
+        fontSize: 13,
         fontFamily: "Avenir",
       },
   });

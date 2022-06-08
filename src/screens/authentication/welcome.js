@@ -14,12 +14,12 @@ export default function Welcome() {
           
             <Image style = {styles.image} source = {require("../../../assets/welcome-logo.png")}/>
 
-            <TouchableOpacity style={styles.loginBtn} onPress = {() => navigation.navigate('LoginScreen')}>
-                <Text style={styles.loginText}>login.</Text>
+            <TouchableOpacity style={styles.button} onPress = {() => navigation.navigate('LoginScreen')}>
+                <Text style={styles.text}>login.</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginBtn} onPress = {() => navigation.navigate('RegisterScreen')}>
-                <Text style={styles.loginText}>register.</Text>
+            <TouchableOpacity style={styles.button} onPress = {() => navigation.navigate('RegisterScreen')}>
+                <Text style={styles.text}>register.</Text>
             </TouchableOpacity>
 
             </View>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
       height: 450,
       marginTop: -30,
     },
-      loginBtn:{
+    button:{
         width:"80%",
         borderRadius:25,
         height:50,
@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
         marginTop:10,
         backgroundColor:"#DDC2EF",
     },
-    loginText: {
+    text: {
         fontFamily: 'Avenir', 
-        fontSize: 15,
+        fontSize: 18,
     },
   });

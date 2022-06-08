@@ -43,6 +43,7 @@ export default function ForgotPassword({navigation}) {
                 onChangeText={(mail) => setEmail(mail)}
                 autoCorrect = {false}
                 value = {email}
+                keyboardType = 'email-address'
             />
             </View>
 

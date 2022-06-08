@@ -1,10 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet,Text,View,Image,TouchableOpacity,SafeAreaView} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
-import React, {useState} from "react";
-import BottomTab from "../tabs/bottomTab";
+import React from "react";
 import { getAuth } from 'firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 
 const AppButton = ({ onPress, title }) => (
@@ -21,12 +19,12 @@ const LogoutButton = ({ onPress, title }) => (
 
 
 export default function Profile() {
-  const navigation = useNavigation();
   const auth = getAuth();
   const user = auth.currentUser;
   const name = user.displayName;
 
   const signOut = () => auth.signOut().then(() => console.log('user signed out'));
+  const navigation = useNavigation();
 
   return(
       <SafeAreaView style={globalStyles.background}>
@@ -36,7 +34,9 @@ export default function Profile() {
               
           <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
           
-          <Text style = {styles.name}>{name}</Text>
+          <TouchableOpacity>
+            <Text style = {styles.name}>{name}</Text>
+          </TouchableOpacity>
           
           <View style={styles.screenContainer}>
               <AppButton title="my body" backgroundColor="#007bff" />
@@ -55,9 +55,6 @@ export default function Profile() {
           </View>
 
         </View> 
-
-      {/* <BottomTab navigation= { navigation }/> */}
-
       </SafeAreaView>
   );
 };

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
@@ -11,16 +10,9 @@ import AppLoading from 'expo-app-loading';
 
 // Imports for navigations
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './src/screens/home';
-import Profile from './src/screens/profile';
-import Login from './src/screens/authentication/login'
-import Welcome from './src/screens/authentication/welcome';
-import Register from './src/screens/authentication/register';
-import ForgotPassword from './src/screens/authentication/forgotPassword';
+import LoggedOutNavigator from './src/navigation/loggedOutNavigation';
+import LoggedInNavigator from './src/navigation/loggedInNavigation';
 
-
-const Stack = createNativeStackNavigator();
 
 export default function App() {
   let [fontsLoaded, error]= useFonts({
@@ -52,40 +44,8 @@ export default function App() {
 
   return (
       (!fontsLoaded) ? <AppLoading /> : (
-  
-        <NavigationContainer >     
-          <Stack.Navigator screenOptions = {{headerShown: false }}>
-            
-            {(!isLoggedIn && fontsLoaded) ? (
-              <Stack.Group 
-                options={{animationTypeForReplace: isLoggedIn ? 'pop' : 'push',}} 
-                component = 'WelcomeScreen'>
-                <Stack.Screen
-                  name="WelcomeScreen"
-                  component={Welcome}
-                />
-                <Stack.Screen
-                  name="LoginScreen"
-                  component={Login}
-                />
-                <Stack.Screen
-                  name="RegisterScreen"
-                  component={Register}
-                />
-                <Stack.Screen
-                  name="ForgotScreen"
-                  component={ForgotPassword}
-                />
-              </Stack.Group>)
-                
-            : (
-              <Stack.Group>
-                {/* <Stack.Screen name = "HomeScreen" component={Home} /> */}
-                <Stack.Screen name = "ProfileScreen" component = {Profile} />
-              </Stack.Group>              
-            )}
-          </Stack.Navigator>
+        <NavigationContainer >                 
+            {(!isLoggedIn && fontsLoaded) ? <LoggedOutNavigator/> : <LoggedInNavigator/>}
         </NavigationContainer>
   ));
-
 }
