@@ -2,7 +2,7 @@ import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity, SafeAreaV
 import { globalStyles } from '../../../styles/globalStyles';
 import * as React from 'react';
 import { useState } from "react";
-import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 
 export default function Register({navigation}) {
     const [email, setEmail] = useState('');
@@ -18,15 +18,17 @@ export default function Register({navigation}) {
       }
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // Signed in 
           const user = userCredential.user;
-          auth.currentUser.updateProfile({displayName: username, })
+          updateProfile(auth.currentUser, {displayName: username}).then(() => console.log(username));
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           if (errorCode == "auth/invalid-email") {
             alert('Please enter a valid email!');
+          }
+          if (errorCode == "auth/email-already-in-use") {
+            alert('You have already created an account with us!');
           }
           if (errorCode == "auth/weak-password") {
             alert('Your password must be at least 6 characters long!');
@@ -47,6 +49,7 @@ export default function Register({navigation}) {
             <TextInput
                 style={styles.TextInput}
                 placeholder="Enter your email."
+                autoCapitalize="none"
                 placeholderTextColor="black"
                 onChangeText={(mail) => setEmail(mail)}
                 autoCorrect = {false}
@@ -59,6 +62,7 @@ export default function Register({navigation}) {
                 style={styles.TextInput}
                 placeholder="Set a username."
                 placeholderTextColor="black"
+                autoCapitalize="none"
                 onChangeText={(name) => setUsername(name)}
                 autoCorrect = {false}
                 value = {username}
@@ -69,6 +73,7 @@ export default function Register({navigation}) {
             <TextInput
                 style={styles.TextInput}
                 placeholder="Set a password."
+                autoCapitalize="none"
                 placeholderTextColor="black"
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
@@ -81,6 +86,7 @@ export default function Register({navigation}) {
                 style={styles.TextInput}
                 placeholder="Confirm Password."
                 placeholderTextColor="black"
+                autoCapitalize="none"
                 secureTextEntry={true}
                 onChangeText={(password) => setCfmPassword(password)}
                 value = {cfmPassword}

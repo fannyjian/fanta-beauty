@@ -41,6 +41,7 @@ export default function Login({navigation}) {
             <TextInput
                 style={styles.TextInput}
                 placeholder="Email."
+                autoCapitalize="none"
                 placeholderTextColor="black"
                 onChangeText={(name) => setEmail(name)}
                 autoCorrect = {false}
@@ -52,6 +53,7 @@ export default function Login({navigation}) {
             <TextInput
                 style={styles.TextInput}
                 placeholder="Password."
+                autoCapitalize="none"
                 placeholderTextColor="black"
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
@@ -60,7 +62,7 @@ export default function Login({navigation}) {
             </View>
 
             <TouchableOpacity>
-                <Text style={styles.forgot_button} onPress = {() => console.log('forgot password function not available yet :)')}>Forgot Password?</Text>
+                <Text style={styles.forgot_button} onPress = {() => navigation.navigate('ForgotScreen')}>Forgot Password?</Text>
             </TouchableOpacity> 
 
             <TouchableOpacity style={styles.loginBtn} onPress = {handleLogin} >

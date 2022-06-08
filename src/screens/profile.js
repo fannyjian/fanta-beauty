@@ -47,7 +47,7 @@ export default function Profile() {
           </View>
 
           <View style={styles.screenContainer}>
-              <AppButton title="wishlist" backgroundColor="#007bff" onPress = {() => console.log(name)}/>
+              <AppButton title="wishlist" backgroundColor="#007bff"/>
           </View>
 
           <View style={styles.screenContainer}>
@@ -64,37 +64,38 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
     image :{
-        flex: 0.6,
-        width: 350,
-        height: 350,
-        justifyContent: 'flex-end'
+      flex: 0.6,
+      width: 350,
+      height: 350,
+      justifyContent: 'flex-end'
     },
     name: {
-        fontSize: 20,
-        fontFamily: "AbrilFatface_400Regular",
-        color: "black",
-        borderBottomWidth: 25,
+      marginTop: 10,
+      fontSize: 20,
+      fontFamily: "AbrilFatface_400Regular",
+      color: "black",
+      borderBottomWidth: 25,
     },
     screenContainer: {
-        justifyContent: "flex-start",
-        padding: 16,
-      },
-      appButtonContainer: {
-        width: 300,
-        backgroundColor: "white",
-        borderRadius: 40,
-        paddingVertical: 10,
-      },
-      appButtonText: {
-        fontSize: 25,
-        fontFamily: "AbrilFatface_400Regular",
-        color: "black",
-        alignSelf: "center",
-      },
-      logoutButtonText: {
-        fontSize: 20,
-        fontFamily: "AbrilFatface_400Regular",
-        color: "#DDC2EF",
-        alignSelf: "center",
-      }
+      justifyContent: "flex-start",
+      padding: 16,
+    },
+    appButtonContainer: {
+      width: 300,
+      backgroundColor: "white",
+      borderRadius: 40,
+      paddingVertical: 10,
+    },
+    appButtonText: {
+      fontSize: 25,
+      fontFamily: "AbrilFatface_400Regular",
+      color: "black",
+      alignSelf: "center",
+    },
+    logoutButtonText: {
+      fontSize: 20,
+      fontFamily: "AbrilFatface_400Regular",
+      color: "#DDC2EF",
+      alignSelf: "center",
+    }
 });
