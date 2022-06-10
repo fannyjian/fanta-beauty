@@ -1,9 +1,9 @@
-import { StyleSheet,Text,View,Image,TouchableOpacity,SafeAreaView} from "react-native";
+import { StyleSheet,Text,View,TouchableOpacity,SafeAreaView} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
 import React from "react";
 import { getAuth } from 'firebase/auth';
 import { useNavigation } from "@react-navigation/native";
-
+import { Avatar } from "react-native-elements";
 
 const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
@@ -31,8 +31,12 @@ export default function Profile() {
         <Text style = {globalStyles.header}>Profile.</Text>
 
         <View style = {globalStyles.container}>
-              
-          <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
+          
+          <View style = {styles.image}>
+            <Avatar source={require("../../assets/default-profile.jpeg")} size = {200} rounded = {true}>
+              <Avatar.Accessory size = {40} onPress = {() => navigation.navigate('EditProfileScreen')} />
+            </Avatar>
+          </View>
           
           <TouchableOpacity>
             <Text style = {styles.name}>{name}</Text>
@@ -47,7 +51,7 @@ export default function Profile() {
           </View>
 
           <View style={styles.screenContainer}>
-              <AppButton title="wishlist" backgroundColor="#007bff"/>
+              <AppButton title="wishlist" backgroundColor="#007bff" onPress = {() => navigation.navigate('WishlistScreen')} />
           </View>
 
           <View style={styles.screenContainer}>
@@ -61,13 +65,12 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
     image :{
-      flex: 0.6,
-      width: 350,
-      height: 350,
-      justifyContent: 'flex-end'
+      marginTop: -30,
+      justifyContent: 'flex-end',
     },
     name: {
       marginTop: 10,
+      marginBottom: -10,
       fontSize: 20,
       fontFamily: "AbrilFatface_400Regular",
       color: "black",
@@ -94,5 +97,5 @@ const styles = StyleSheet.create({
       fontFamily: "AbrilFatface_400Regular",
       color: "#DDC2EF",
       alignSelf: "center",
-    }
+    },
 });

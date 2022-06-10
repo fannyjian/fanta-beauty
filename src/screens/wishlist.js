@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Image, SafeAreaView, Dimensions, FlatList } from 'react-native';
+import { globalStyles } from '../../styles/globalStyles';
 
 const data = [
   'https://cdn-images.farfetch-contents.com/18/41/36/44/18413644_39547459_1000.jpg',
@@ -14,36 +15,33 @@ const imageH = height * 0.2;
 
 export default function Wishlist() {
   return (
-    <SafeAreaView style={styles.background}>
-      <View><Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:60, margin: 10, left: 20}}>Wishlist.</Text></View>
+    <SafeAreaView style={globalStyles.background}>
+      <View>
+        <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:60, margin: 10, left: 20}}>Wishlist.</Text>
+      </View>
 
-    <View>
-      <FlatList 
-      data={data}
-      keyExtractor={(_, index) => index.toString()}
-      style={{ width: "100%" }}
-      vertical
-      numColumns={2}
-      columnWrapperStyle={styles.row}
-      key = {2}
-      pagingEnabled
-      renderItem={({item}) => {
-        return <View style={{width}}>
-          <Image source={{uri : item}} style={{
-            width: imageW,
-            height: imageH,
-            resizeMode: 'cover',
-            borderRadius:0,
-            alignItems: 'center',
-            margin: 10,
-            left: 100
-
-          }}/>
-          </View>
-      }}
-      />
-    </View>
-
+      <View>
+        <FlatList 
+        data={data}
+        keyExtractor={(_, index) => index.toString()}
+        style={{ width: "100%" }}
+        vertical
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        key = {2}
+        pagingEnabled
+        renderItem={({item}) => {
+          return <View style={{width}}>
+                  <Image source={{uri : item}} style={{
+                    width: imageW,
+                    height: imageH,
+                    resizeMode: 'cover',
+                    borderRadius:0,
+                    alignItems: 'center',
+                    margin: 10,
+                    left: 100}}/>
+                </View>}}/>
+      </View>
     </SafeAreaView>
 );
 }

@@ -44,7 +44,7 @@ export default function App() {
 
   return (
       (!fontsLoaded) ? <AppLoading /> : (
-        <NavigationContainer >                 
+        <NavigationContainer>                 
             {(!isLoggedIn && fontsLoaded) ? <LoggedOutNavigator/> : <LoggedInNavigator/>}
         </NavigationContainer>
   ));

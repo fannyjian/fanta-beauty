@@ -4,6 +4,7 @@ import Home from '../screens/home';
 import Wishlist from '../screens/wishlist';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ProfileNavigator from './profileNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,8 +38,8 @@ export default function LoggedInNavigator() {
                     component={Wishlist} 
                     options={{tabBarIcon: ({ color }) => (<MaterialCommunityIcons name="cart" color={color} size={50} />)}}/>
                 <Tab.Screen 
-                    name = "ProfileScreen" 
-                    component = {Profile} 
+                    name = "ProfileScreens" 
+                    component = {ProfileNavigator} 
                     options={{tabBarIcon: ({ color }) => (<MaterialCommunityIcons name="account" color={color} size={50} />)}}/>
       </Tab.Navigator>
     );

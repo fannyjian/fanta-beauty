@@ -17,5 +17,20 @@ export const globalStyles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'flex-start',
-    }
+    },
+    inputView: {
+      backgroundColor: "white",
+      borderRadius: 30,
+      width: "70%",
+      height: 45,
+      marginBottom: 20,
+      alignItems: "center",
+    },   
+    TextInput: {
+      height: 50,
+      flex: 1,
+      padding: 10,
+      fontFamily: "Avenir",
+      fontSize: 15,
+    },
 });
