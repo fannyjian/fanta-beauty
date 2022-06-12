@@ -1,4 +1,4 @@
-import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity, SafeAreaView, Pressable} from "react-native";
+import { StyleSheet,Text,View,TextInput,TouchableOpacity, SafeAreaView, Image, Pressable} from "react-native";
 import { globalStyles } from '../../../styles/globalStyles';
 import * as React from 'react';
 import { useState } from "react";
@@ -15,7 +15,6 @@ export default function ForgotPassword({navigation}) {
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
           if (errorCode == "auth/invalid-email") {
             alert('Please enter a valid email!');
           }
@@ -28,15 +27,15 @@ export default function ForgotPassword({navigation}) {
 
     return(
         <SafeAreaView style={globalStyles.background}>
-            <Text style = {styles.header}>Password {'\n'}Reset.</Text>
+            <Text style = {globalStyles.header}>Password {'\n'}Reset.</Text>
 
             <View style = {globalStyles.container}>
           
             <Image style = {styles.image} source = {require("../../../assets/login-logo.png")}/>
 
-            <View style={styles.inputView}>
+            <View style={globalStyles.inputView}>
             <TextInput
-                style={styles.TextInput}
+                style={globalStyles.TextInput}
                 placeholder="Enter your email."
                 autoCapitalize="none"
                 placeholderTextColor="black"
@@ -47,12 +46,12 @@ export default function ForgotPassword({navigation}) {
             />
             </View>
 
-            <TouchableOpacity style={styles.loginBtn} onPress = {handleRetrieval} >
-                <Text style={styles.loginText}>RETRIEVE MY ACCOUNT</Text>
+            <TouchableOpacity style={globalStyles.button} onPress = {handleRetrieval} >
+                <Text style={globalStyles.avenirFont}>RETRIEVE MY ACCOUNT</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-                <Text style={styles.goBack_button} onPress = {() => navigation.goBack()}>Back to Login Page</Text>
+                <Text style={globalStyles.goBack} onPress = {() => navigation.goBack()}>Back to Login Page</Text>
             </TouchableOpacity> 
             </View>
 
@@ -62,56 +61,10 @@ export default function ForgotPassword({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        // flex: 0.12,
-        fontFamily: 'AbrilFatface_400Regular', 
-        fontSize:60, 
-        margin: 40,
-        alignItems: 'baseline',
-        backgroundColor: '#F3E9F9',
-    },
-    image :{
-      width: 300,
-      height: 300,
-      marginTop: -40,
-      marginBottom: -20,
-    },
-    inputView: {
-        backgroundColor: "white",
-        borderRadius: 30,
-        width: "70%",
-        height: 45,
-        marginBottom: 20,
-        alignItems: "center",
-      },
-      
-      TextInput: {
-        height: 50,
-        flex: 1,
-        padding: 10,
-        fontFamily: "Avenir",
-        fontSize: 15,
-      },
-      forgot_button: {
-        height: 40,
-        fontSize: 12,
-        fontFamily: "Avenir",
-      },
-      loginBtn:{
-        width:"80%",
-        borderRadius:25,
-        height:50,
-        alignItems:"center",
-        justifyContent:"center",
-        marginTop:20,
-        backgroundColor:"#DDC2EF",
-    },
-    loginText: {
-        fontFamily: "Avenir"
-    },
-    goBack_button: {
-      marginTop: 10,
-      fontSize: 12,
-      fontFamily: "Avenir",
-    },
-  });
+  image :{
+    width: 300,
+    height: 300,
+    marginTop: -40,
+    marginBottom: -20,
+  },
+});

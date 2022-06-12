@@ -45,9 +45,9 @@ export default function Register({navigation}) {
           
             <Image style = {styles.image} source = {require("../../../assets/login-logo.png")}/>
 
-            <View style={styles.inputView}>
+            <View style={globalStyles.inputView}>
             <TextInput
-                style={styles.TextInput}
+                style={globalStyles.TextInput}
                 placeholder="Enter your email."
                 autoCapitalize="none"
                 placeholderTextColor="black"
@@ -58,9 +58,9 @@ export default function Register({navigation}) {
             />
             </View>
 
-            <View style={styles.inputView}>
+            <View style={globalStyles.inputView}>
             <TextInput
-                style={styles.TextInput}
+                style={globalStyles.TextInput}
                 placeholder="Set a username."
                 placeholderTextColor="black"
                 autoCapitalize="none"
@@ -70,9 +70,9 @@ export default function Register({navigation}) {
             />
             </View>
             
-            <View style={styles.inputView}>
+            <View style={globalStyles.inputView}>
             <TextInput
-                style={styles.TextInput}
+                style={globalStyles.TextInput}
                 placeholder="Set a password."
                 autoCapitalize="none"
                 placeholderTextColor="black"
@@ -82,9 +82,9 @@ export default function Register({navigation}) {
             />
             </View>
 
-            <View style={styles.inputView}>
+            <View style={globalStyles.inputView}>
             <TextInput
-                style={styles.TextInput}
+                style={globalStyles.TextInput}
                 placeholder="Confirm Password."
                 placeholderTextColor="black"
                 autoCapitalize="none"
@@ -94,12 +94,12 @@ export default function Register({navigation}) {
             />
             </View>
 
-            <TouchableOpacity style={styles.loginBtn} onPress = {handleRegister} >
-                <Text style={styles.loginText}>REGISTER NOW</Text>
+            <TouchableOpacity style={globalStyles.button} onPress = {handleRegister} >
+                <Text style={globalStyles.avenirFont}>REGISTER NOW</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-                <Text style={styles.goBack_button} onPress = {() => navigation.goBack()}>Back to Welcome Page</Text>
+                <Text style={globalStyles.goBack} onPress = {() => navigation.goBack()}>Back to Welcome Page</Text>
             </TouchableOpacity> 
             </View>
 
@@ -109,47 +109,9 @@ export default function Register({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    image :{
-      width: 300,
-      height: 300,
-      marginBottom: -20,
-    },
-    inputView: {
-        backgroundColor: "white",
-        borderRadius: 30,
-        width: "70%",
-        height: 45,
-        marginBottom: 20,
-        alignItems: "center",
-      },
-      
-      TextInput: {
-        height: 50,
-        flex: 1,
-        padding: 10,
-        fontFamily: "Avenir",
-        fontSize: 15,
-      },
-      forgot_button: {
-        height: 40,
-        fontSize: 12,
-        fontFamily: "Avenir",
-      },
-      loginBtn:{
-        width:"80%",
-        borderRadius:25,
-        height:50,
-        alignItems:"center",
-        justifyContent:"center",
-        marginTop:20,
-        backgroundColor:"#DDC2EF",
-    },
-    loginText: {
-        fontFamily: "Avenir"
-    },
-    goBack_button: {
-      marginTop: 10,
-      fontSize: 12,
-      fontFamily: "Avenir",
-    },
-  });
+  image :{
+    width: 300,
+    height: 300,
+    marginBottom: -20,
+  },
+});

@@ -17,7 +17,7 @@ export default function Wishlist() {
   return (
     <SafeAreaView style={globalStyles.background}>
       <View>
-        <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:60, margin: 10, left: 20}}>Wishlist.</Text>
+        <Text style={globalStyles.header}>Wishlist.</Text>
       </View>
 
       <View>
@@ -47,46 +47,9 @@ export default function Wishlist() {
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: '#F3E9F6',
-  },
   picture: {
     flex: 1,
     alignItems: 'center',
-  },
-  NavContainer: {
-    position: 'absolute',
-    alignItems: 'center',
-    bottom: 0,
-  },
-  NavBar: {
-    flexDirection:'row',
-    backgroundColor: '#DDC2EF',
-    width:'100%',
-    justifyContent: 'space-evenly',
-    borderRadius: 40
-  },
-  IconBehave: {
-    padding: 30,
-  },
-  circleDiv: {
-    position: 'absolute',
-    bottom: 90,
-    height: 10,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  whiteCircle: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    margin: 5,
-    backgroundColor: 'white',
-
   },
   row: {
     flex: 1,

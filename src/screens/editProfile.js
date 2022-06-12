@@ -1,30 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View, Text, StyleSheet, TextInput, TouchableOpacity, Modal } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { globalStyles } from '../../styles/globalStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import { getStorage, ref, uploadBytes, getDownloadURL } from '@firebase/storage';
 
 export default function EditProfile() {
   const navigation = useNavigation();
   const auth = getAuth();
+  const user = auth.currentUser;
 
   const [image, setImage] = useState(null);
-  const [name, setName] = useState('');
+  const storage = getStorage(); 
+  const imgRef = ref(storage, user.uid + '/profile.jpg'); 
+
+  useEffect(() => {
+    const func = async () => {
+      const storage = getStorage();
+      const defaultRef = ref(storage, '/default-profile.jpeg')
+
+      await getDownloadURL(imgRef).then((result) => {
+        setImage(result);
+      }).catch((error) => {
+        getDownloadURL(defaultRef).then((result) => {
+          setImage(result);
+        })
+      })
+    }
+
+    func();
+  }, []);
+
+  const [name, setName] = useState(user.displayName);
   const [modalVisible, setModalVisible] = useState(false);
 
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
     if (permissionResult.granted === false) {
       alert("Please allow Fanta Beauty to access your photos 🥹");
       return;
     }
-
-    const result = await ImagePicker.launchImageLibraryAsync();
-    console.log(result);
-
+    const result = await ImagePicker.launchImageLibraryAsync({allowsEditing: true, aspect:[1,1]});
     if (!result.cancelled) {
       setImage(result.uri);
       setModalVisible(false);
@@ -37,23 +55,20 @@ export default function EditProfile() {
       alert("Please enable camera access for Fanta Beauty🥹");
       return;
     }
-    const result = await ImagePicker.launchCameraAsync();
-
-    console.log(result);
-
+    const result = await ImagePicker.launchCameraAsync({allowsEditing: true, aspect:[1,1]});
     if (!result.cancelled) {
       setImage(result.uri);
       setModalVisible(false);
     }
   }
 
-  const saveChanges = () => {
-    if (name == '') {
-      navigation.goBack();
-      return;
+  const saveChanges = async () => {
+    if (image != null) {
+      const img = await fetch(image);
+      const bytes = await img.blob();
+      await uploadBytes(imgRef, bytes);
     }
-    updateProfile(auth.currentUser, {displayName: name})
-    .then(() => navigation.goBack());
+    await updateProfile(auth.currentUser, {displayName: name}).then(() => navigation.goBack());
   }
 
   return (
@@ -72,16 +87,16 @@ export default function EditProfile() {
             <View style={styles.modalView}>
               <TouchableOpacity
                   onPress={pickImage}
-                  style={styles.loginBtn}>
+                  style={styles.imgUpload}>
                   <Text style={styles.loginText}>Upload from Images.</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.loginBtn} onPress = {takeImage}>
+              <TouchableOpacity style={styles.imgUpload} onPress = {takeImage}>
                   <Text style={styles.loginText}>Take a new picture.</Text>
               </TouchableOpacity>
 
               <TouchableOpacity>
-                  <Text style={styles.goBack_button} onPress = {() => setModalVisible(false)}>Cancel.</Text>
+                  <Text style={styles.goBack} onPress = {() => setModalVisible(false)}>Cancel.</Text>
               </TouchableOpacity>
               </View>
           </View>
@@ -91,9 +106,9 @@ export default function EditProfile() {
           <Image source = {{uri : image}} defaultSource = {require('../../assets/default-profile.jpeg')} style={ styles.image }/>
         </TouchableOpacity>
 
-        <View style={styles.inputView}>
+        <View style={globalStyles.inputView}>
           <TextInput
-              style={styles.TextInput}
+              style={globalStyles.TextInput}
               placeholder={auth.currentUser.displayName}
               autoCapitalize="none"
               placeholderTextColor="black"
@@ -103,12 +118,12 @@ export default function EditProfile() {
           />
           </View>
 
-        <TouchableOpacity style={styles.loginBtn} onPress = {saveChanges}>
+        <TouchableOpacity style={styles.saveChanges} onPress = {saveChanges}>
             <Text style={styles.loginText}>save my changes.</Text>
         </TouchableOpacity>
 
         <TouchableOpacity>
-              <Text style={styles.goBack_button} onPress = {() => navigation.goBack()}>back to profile</Text>
+              <Text style={styles.goBack} onPress = {() => navigation.goBack()}>back to profile</Text>
         </TouchableOpacity> 
 
         </View> 
@@ -118,40 +133,33 @@ export default function EditProfile() {
 
 const styles = StyleSheet.create({
   image :{
-    marginBottom: 20,
+    margin: 30,
     width: 250,
     height: 250,
     borderRadius: 180,
   },
-  inputView: {
-      backgroundColor: "white",
-      borderRadius: 30,
-      width: "70%",
-      height: 45,
-      marginBottom: 20,
-      alignItems: "center",
-    },   
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    fontFamily: "Avenir",
-    fontSize: 15,
-  },
-  loginBtn:{
-    width:"90%",
+  saveChanges:{
+    width:"70%",
     borderRadius:25,
     height:50,
     alignItems:"center",
     justifyContent:"center",
-    marginTop:20,
     backgroundColor:"#DDC2EF",
   },
   loginText: {
-      fontFamily: "Avenir",
-      fontSize: 16,
+    fontFamily: "Avenir",
+    fontSize: 16,
   },
-  goBack_button: {
+  imgUpload: {
+    width:"90%",
+    borderRadius:25,
+    height:50,
+    margin: 10,
+    alignItems:"center",
+    justifyContent:"center",
+    backgroundColor:"#DDC2EF",
+  },
+  goBack: {
     marginTop: 20,
     fontSize: 15,
     fontFamily: "Avenir",

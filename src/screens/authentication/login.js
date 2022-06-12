@@ -11,12 +11,8 @@ export default function Login({navigation}) {
     const auth = getAuth(); 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            })
-        .catch((error) => {
+        .then().catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
             if (errorCode == "auth/invalid-email") {
                 alert('Please enter a valid email!')
             }
@@ -37,9 +33,9 @@ export default function Login({navigation}) {
           
             <Image style = {styles.image} source = {require("../../../assets/login-logo.png")}/>
 
-            <View style={styles.inputView}>
+            <View style={globalStyles.inputView}>
             <TextInput
-                style={styles.TextInput}
+                style={globalStyles.TextInput}
                 placeholder="Email."
                 autoCapitalize="none"
                 placeholderTextColor="black"
@@ -50,9 +46,9 @@ export default function Login({navigation}) {
             />
             </View>
             
-            <View style={styles.inputView}>
+            <View style={globalStyles.inputView}>
             <TextInput
-                style={styles.TextInput}
+                style={globalStyles.TextInput}
                 placeholder="Password."
                 autoCapitalize="none"
                 placeholderTextColor="black"
@@ -66,12 +62,12 @@ export default function Login({navigation}) {
                 <Text style={styles.forgot_button} onPress = {() => navigation.navigate('ForgotScreen')}>Forgot Password?</Text>
             </TouchableOpacity> 
 
-            <TouchableOpacity style={styles.loginBtn} onPress = {handleLogin} >
-                <Text style={styles.loginText}>LOGIN</Text>
+            <TouchableOpacity style={globalStyles.button} onPress = {handleLogin} >
+                <Text style={globalStyles.avenirFont}>LOGIN</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-                <Text style={styles.goBack_button} onPress = {() => navigation.goBack()}>Back to Welcome Page</Text>
+                <Text style={globalStyles.goBack} onPress = {() => navigation.goBack()}>Back to Welcome Page</Text>
             </TouchableOpacity> 
             </View>
 
@@ -82,46 +78,13 @@ export default function Login({navigation}) {
 
 const styles = StyleSheet.create({
     image :{
-      marginBottom: 10,
-      width: 300,
-      height: 300,
+        marginBottom: 10,
+        width: 300,
+        height: 300,
     },
-    inputView: {
-        backgroundColor: "white",
-        borderRadius: 30,
-        width: "70%",
-        height: 45,
-        marginBottom: 20,
-        alignItems: "center",
-      },   
-      TextInput: {
-        height: 50,
-        flex: 1,
-        padding: 10,
-        fontFamily: "Avenir",
-        fontSize: 15,
-      },
-      forgot_button: {
+    forgot_button: {
         height: 50,
         fontSize: 13,
         fontFamily: "Avenir",
-      },
-      loginBtn:{
-        width:"80%",
-        borderRadius:25,
-        height:50,
-        alignItems:"center",
-        justifyContent:"center",
-        marginTop:20,
-        backgroundColor:"#DDC2EF",
     },
-    loginText: {
-        fontFamily: "Avenir",
-        fontSize: 16,
-    },
-    goBack_button: {
-        marginTop: 10,
-        fontSize: 13,
-        fontFamily: "Avenir",
-      },
   });

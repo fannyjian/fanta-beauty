@@ -12,10 +12,13 @@
   "dependencies": {
     "@expo-google-fonts/abril-fatface": "^0.2.2",
     "@expo-google-fonts/inter": "^0.2.2",
+    "@firebase/storage": "^0.9.7",
+    "@firebase/util": "^1.6.1",
     "@react-native-async-storage/async-storage": "^1.17.5",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^14.11.0",
     "@react-native-firebase/auth": "^14.11.0",
+    "@react-native-firebase/firestore": "^14.11.0",
     "@react-native-firebase/storage": "^14.11.0",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/material-bottom-tabs": "^6.2.1",

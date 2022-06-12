@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 // Imports for loading font
@@ -19,7 +19,6 @@ export default function App() {
     AbrilFatface_400Regular 
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const firebaseConfig = {
     apiKey: "AIzaSyA0nT_FejM8tVJ5lAzd_uz0Nw4jgAIBb88",
     authDomain: "fanta-beauty-fc716.firebaseapp.com",
@@ -31,6 +30,9 @@ export default function App() {
   };
 
   const app = initializeApp(firebaseConfig);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   const auth = getAuth(app);
 
   onAuthStateChanged(auth, (user) => {

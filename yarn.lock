@@ -1543,6 +1543,14 @@
     "@firebase/util" "1.6.0"
     tslib "^2.1.0"
 
+"@firebase/component@0.5.15":
+  version "0.5.15"
+  resolved "https://registry.yarnpkg.com/@firebase/component/-/component-0.5.15.tgz#5ceaf3c3f2e495a5ac65b2b41354ca6d44e33f88"
+  integrity sha512-VRnZxmvtJmXupTPg37LxM0zdyMN54EXkmsFD4x5Bm4eZUay9VGnhfiGnE3m9Af/2hnURA2idIBN/23L6982iPQ==
+  dependencies:
+    "@firebase/util" "1.6.1"
+    tslib "^2.1.0"
+
 "@firebase/database-compat@0.2.0":
   version "0.2.0"
   resolved "https://registry.npmjs.org/@firebase/database-compat/-/database-compat-0.2.0.tgz"
@@ -1769,10 +1777,27 @@
     node-fetch "2.6.7"
     tslib "^2.1.0"
 
+"@firebase/storage@^0.9.7":
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/@firebase/storage/-/storage-0.9.7.tgz#2c0b698b29d99aeb6e33906bb949caad67376f5c"
+  integrity sha512-0unWzgx5bceyO3SX/ilHaxwwHidN5sXZGakFLjAn8cbpjVpmybcKaLOduBxlMXeDCdUFfO8FcvEajFkV+0t2hA==
+  dependencies:
+    "@firebase/component" "0.5.15"
+    "@firebase/util" "1.6.1"
+    node-fetch "2.6.7"
+    tslib "^2.1.0"
+
 "@firebase/util@1.6.0":
   version "1.6.0"
   resolved "https://registry.npmjs.org/@firebase/util/-/util-1.6.0.tgz"
   integrity sha512-6+hhqb4Zzjoo12xofTDHPkgW3FnN4ydBsjd5X2KuQI268DR3W3Ld64W/gkKPZrKRgUxeNeb+pykfP3qRe7q+vA==
+  dependencies:
+    tslib "^2.1.0"
+
+"@firebase/util@1.6.1", "@firebase/util@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@firebase/util/-/util-1.6.1.tgz#203e7e5f95d91b42b042e9d9e21472ad2bfcdb44"
+  integrity sha512-+eDE6uG5GgvXYHbAzfP1mpJUX1VDBD+A8CjBeBoNAKAVAApMSDxDODqRcOq7NW7kFJXSUkMzDJWhnUIifX2R8w==
   dependencies:
     tslib "^2.1.0"
 
@@ -2245,6 +2270,11 @@
   version "14.11.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-14.11.0.tgz#cc5748777224dd81f87d005a71c887098e0f1e63"
   integrity sha512-h4JJI3DKKpiVLX+FDiFNprUHquoBkZUZA+bpIZoRGHOr9V8GzcD4IGBs2biWOYYGfEvGZvTVlHXlZOo4rmWEuA==
+
+"@react-native-firebase/firestore@^14.11.0":
+  version "14.11.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-14.11.0.tgz#fac678ce4c6e8e86ab394067b6423cce7c435a88"
+  integrity sha512-XG7+bLCjbuQtlren/DTTf7WvJ0gcbxp0DRNJ5/m0p8n0+x1fCGlCNpvzwDGQvljxF1JcE/qj22D44DLsJGM8ug==
 
 "@react-native-firebase/storage@^14.11.0":
   version "14.11.0"
