@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore } from 'firebase/firestore';
 
 // Imports for loading font
 import { AbrilFatface_400Regular } from '@expo-google-fonts/abril-fatface';
@@ -30,6 +31,7 @@ export default function App() {
   };
 
   const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 

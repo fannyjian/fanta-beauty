@@ -43,8 +43,7 @@ export default function Register({navigation}) {
 
             <View style = {globalStyles.container}>
           
-            <Image style = {styles.image} source = {require("../../../assets/login-logo.png")}/>
-
+            <View style = {styles.container}></View>
             <View style={globalStyles.inputView}>
             <TextInput
                 style={globalStyles.TextInput}
@@ -114,4 +113,7 @@ const styles = StyleSheet.create({
     height: 300,
     marginBottom: -20,
   },
+  container: {
+    margin: 50,
+  }
 });

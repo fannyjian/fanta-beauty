@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, SafeAreaView, Dimensions, FlatList } from 'react-native';
 import React from "react";
 import { globalStyles } from '../../styles/globalStyles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const data = [
   'https://cdn-images.farfetch-contents.com/18/41/36/44/18413644_39547459_1000.jpg',
@@ -12,14 +13,12 @@ const data = [
 ]
 const { width, height } = Dimensions.get('screen');
 const imageW = width;
-const imageH = height * 0.6;
+const imageH = height * 0.65;
 
 export default function Home() {
   return (
     <SafeAreaView style={globalStyles.background}>
-      <View>
         <Text style={globalStyles.header}>Hey!</Text>
-      </View>
 
       <View>
         <FlatList 
@@ -28,32 +27,15 @@ export default function Home() {
         horizontal
         pagingEnabled
         renderItem={({item}) => {
-          return <View style={{width}}>
-                  <Image source={{uri : item}} style={{
-                    width: imageW,
-                    height: imageH,
-                    resizeMode: 'cover',
-                    borderRadius:80,
-                    alignItems: 'center'
-                  }}/>
-                </View>
+          return <TouchableOpacity>
+                  <Image source={{uri : item}} style={styles.picture}/>
+                </TouchableOpacity>
         }}
         />
 
-        <View style={styles.circleDiv}>
-          {data.map(( item, i ) => (
-            <View
-            key={item}
-            style={[styles.whiteCircle,
-            ]}
-            />
-          ))}
-        </View>
+        {data.map(( item, i ) => (<View key={item}/>))}
         
-      <View>
-        <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:25, margin: 6, color: 'white', shadowColor: 'black', shadowOffset: {width: 5, height: 5}, shadowOpacity: 0.4, shadowRadius: 3, left:190}}>welcome to {'\n'}
-      fanta beauty.</Text>
-      </View>
+        <Text style={styles.text}>welcome to {'\n'}fanta beauty.</Text>
       </View>
     </SafeAreaView>
 );
@@ -61,7 +43,22 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   picture: {
-    flex: 1,
+    width: imageW,
+    height: imageH,
+    resizeMode: 'cover',
+    borderRadius:80,
     alignItems: 'center',
   },
+  text: {
+    fontFamily: 'AbrilFatface_400Regular', 
+    fontSize:30, 
+    marginTop: -25,
+    margin: 6, 
+    color: 'white', 
+    shadowColor: 'black', 
+    shadowOffset: {width: 5, height: 5}, 
+    shadowOpacity: 0.4, 
+    shadowRadius: 3, 
+    left:190
+  }
 });

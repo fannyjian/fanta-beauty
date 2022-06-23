@@ -14,12 +14,11 @@ export default function EditProfile() {
 
   const [image, setImage] = useState(null);
   const storage = getStorage(); 
-  const imgRef = ref(storage, user.uid + '/profile.jpg'); 
+  const imgRef = ref(storage, 'profile/' + user.uid); 
 
   useEffect(() => {
     const func = async () => {
-      const storage = getStorage();
-      const defaultRef = ref(storage, '/default-profile.jpeg')
+      const defaultRef = ref(storage, 'profile/default-profile.jpg')
 
       await getDownloadURL(imgRef).then((result) => {
         setImage(result);
@@ -39,7 +38,7 @@ export default function EditProfile() {
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert("Please allow Fanta Beauty to access your photos 🥹");
+      alert("Please allow Fanta Beauty to access your photos🥹");
       return;
     }
     const result = await ImagePicker.launchImageLibraryAsync({allowsEditing: true, aspect:[1,1]});
@@ -103,7 +102,7 @@ export default function EditProfile() {
       </Modal>
           
         <TouchableOpacity onPress={() => setModalVisible (true)}>
-          <Image source = {{uri : image}} defaultSource = {require('../../assets/default-profile.jpeg')} style={ styles.image }/>
+          <Image source = {{uri : image}} style={ styles.image }/>
         </TouchableOpacity>
 
         <View style={globalStyles.inputView}>
@@ -115,6 +114,7 @@ export default function EditProfile() {
               onChangeText={(name) => setName(name)}
               autoCorrect = {false}
               value = {name}
+              selectTextOnFocus = {true}
           />
           </View>
 

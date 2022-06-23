@@ -1,6 +1,11 @@
 import { StyleSheet, Text, View, Image, SafeAreaView, Dimensions, FlatList } from 'react-native';
+import * as React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalStyles } from '../../styles/globalStyles';
+import { doc, getFirestore, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, listAll, getDownloadURL, getStorage } from '@firebase/storage';
+import { useEffect, useState } from 'react';
+import { getAuth } from 'firebase/auth';
 
 const data = [
   'https://cdn-images.farfetch-contents.com/18/41/36/44/18413644_39547459_1000.jpg',
@@ -19,28 +24,51 @@ const imageW = width * 0.4;
 const imageH = height * 0.2;
 
 export default function Wishlist() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const storage = getStorage();
+
+  const [isFetching, setIsFetching] = React.useState(false);
+  const [imageList, setImageList] = useState([]);
+  const imageListRef = ref(storage, 'wishlist/' + user.uid + '/');
+
+  useEffect(() => {
+    listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageList((prev) => [...prev, url]);
+        });
+      });
+    });
+  }, [])
+
+  const onRefresh = async () => {
+    setIsFetching(true);
+    setIsFetching(false);
+  };
+
   return (
     <SafeAreaView style={globalStyles.background}>
-
       <FlatList 
-      data={data}
+      data={imageList}
       keyExtractor={(_, index) => index.toString()}
       numColumns={2}
+      onRefresh = {onRefresh}
+      refreshing = {isFetching}
       style = {{margin: 20, marginBottom: 60}}
       ListHeaderComponent = {<Text style={styles.header}>Wishlist.</Text>}
       stickyHeaderIndices={[0]}
       renderItem={({item, index}) => 
         <TouchableOpacity>
-                <Image source={{uri : item}} style={{
-                  width: imageW,
-                  height: imageH,
-                  resizeMode: 'cover',
-                  borderRadius:30,
-                  alignItems: 'center',
-                  margin: 10,
-                  flex: 0.5,
-                  }}/>
-              </TouchableOpacity>}/>
+          <Image source={{uri : item}} style={{
+            width: imageW,
+            height: imageH,
+            resizeMode: 'cover',
+            borderRadius:30,
+            alignItems: 'center',
+            margin: 10,
+            }}/>
+        </TouchableOpacity>}/>
     </SafeAreaView>
 );
 }

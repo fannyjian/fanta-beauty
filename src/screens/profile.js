@@ -31,8 +31,8 @@ export default function Profile() {
     setName(user.displayName);
     const func = async () => {
       const storage = getStorage();
-      const profileRef = ref(storage, user.uid + '/profile.jpg');
-      const defaultRef = ref(storage, '/default-profile.jpeg')
+      const profileRef = ref(storage, 'profile/' + user.uid);
+      const defaultRef = ref(storage, 'profile/default-profile.jpg')
 
       await getDownloadURL(profileRef).then((result) => {
         setUrl(result);

@@ -1,4 +1,4 @@
-import { StyleSheet,Text,View,Image,TextInput,Button,TouchableOpacity, SafeAreaView, Pressable} from "react-native";
+import { StyleSheet,Text,View,Image,TextInput,TouchableOpacity, SafeAreaView} from "react-native";
 import { globalStyles } from '../../../styles/globalStyles';
 import * as React from 'react';
 import { useState } from "react";
@@ -30,7 +30,7 @@ export default function Login({navigation}) {
             <Text style = {globalStyles.header}>Login.</Text>
 
             <View style = {globalStyles.container}>
-          
+                      
             <Image style = {styles.image} source = {require("../../../assets/login-logo.png")}/>
 
             <View style={globalStyles.inputView}>
@@ -78,7 +78,8 @@ export default function Login({navigation}) {
 
 const styles = StyleSheet.create({
     image :{
-        marginBottom: 10,
+        marginTop: -20,
+        marginBottom: -30,
         width: 300,
         height: 300,
     },
