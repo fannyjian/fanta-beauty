@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { globalStyles } from '../../styles/globalStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuth } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL } from '@firebase/storage';
+import { getStorage, ref, uploadBytes } from '@firebase/storage';
 import { useNavigation } from '@react-navigation/native';
 import { doc, getFirestore, setDoc } from 'firebase/firestore';
 import 'react-native-get-random-values';
@@ -14,10 +14,12 @@ export default function TryOn() {
   const auth = getAuth();
   const user = auth.currentUser;
   const navigation = useNavigation();
-  const firestore = getFirestore();
+  // const firestore = getFirestore();
+  const storage = getStorage(); 
+  const storageRef = ref(storage, 'wishlist/' + user.uid + '/' + v4());
 
   const [image, setImage] = useState(null);
-  const storage = getStorage(); 
+
 
   const [modalVisible, setModalVisible] = useState(false);
   const [textVisible, setTextVisible] = useState(false);
@@ -32,8 +34,11 @@ export default function TryOn() {
     const result = await ImagePicker.launchImageLibraryAsync({allowsEditing: true, aspect:[1,1]});
     if (!result.cancelled) {
       setImage(result.uri);
-      uploadToDB();
+      const img = await fetch(image).catch((error) => Alert.alert('Upload failed😞\nPlease try again!'));
+      const bytes = await img.blob();
+      await uploadBytes(storageRef, bytes);
       setModalVisible(false);
+      Alert.alert('Upload success! 🥳')
     }
   };
 
@@ -42,18 +47,14 @@ export default function TryOn() {
     setTextVisible(true);
   }
 
-  const enterLink = () => {
+  const enterLink = async () => {
     setImage(link);
-    uploadToDB();
-    setTextVisible(false);
-  }
-
-  const uploadToDB = async () => {
-    const storageRef = ref(storage, 'wishlist/' + user.uid + '/' + v4());
-    const img = await fetch(image).catch((error) => Alert.alert('Please upload a valid image!'));
+    const img = await fetch(image).catch((error) => Alert.alert('Please upload a valid image URL!'));
     const bytes = await img.blob();
-    await uploadBytes(storageRef, bytes);  
-}
+    await uploadBytes(storageRef, bytes);     
+    setTextVisible(false);
+    Alert.alert('Upload success! 🥳')
+  }
 
   return (
     <SafeAreaView style={globalStyles.background}>

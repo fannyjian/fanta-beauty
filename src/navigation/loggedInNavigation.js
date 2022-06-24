@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProfileNavigator from './profileNavigation';
 import TryOn from '../screens/tryOn';
+import UploadNavigator from './uploadNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,15 +28,16 @@ export default function LoggedInNavigator() {
                                 borderTopColor:'#DDC2EF',
                                 width:50,
                                 height:50,
-                            }
+                            },
+                            unmountOnBlur: true,
                             }}>
                 <Tab.Screen 
                     name = "HomeScreen" 
                     component={Home} 
                     options={{tabBarIcon: ({ color }) => (<MaterialCommunityIcons name="home" color={color} size={50} />)}}/>
                 <Tab.Screen 
-                    name = "TryOnScreen" 
-                    component={TryOn} 
+                    name = "UploadScreens" 
+                    component={UploadNavigator} 
                     options={{tabBarIcon: ({ color }) => (<MaterialCommunityIcons name="heart" color={color} size={50} />)}}/>
                 <Tab.Screen 
                     name = "ProfileScreens" 

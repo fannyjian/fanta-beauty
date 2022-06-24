@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, Dimensions, FlatList } from 'react-native';
+import { StyleSheet, Text, Image, SafeAreaView, Dimensions, FlatList } from 'react-native';
 import * as React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalStyles } from '../../styles/globalStyles';
-import { doc, getFirestore, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, listAll, getDownloadURL, getStorage } from '@firebase/storage';
+import { ref, listAll, getDownloadURL, getStorage } from '@firebase/storage';
 import { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 
@@ -28,25 +27,30 @@ export default function Wishlist() {
   const user = auth.currentUser;
   const storage = getStorage();
 
-  const [isFetching, setIsFetching] = React.useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [imageList, setImageList] = useState([]);
   const imageListRef = ref(storage, 'wishlist/' + user.uid + '/');
 
-  useEffect(() => {
+  const loadItems = () => {
     listAll(imageListRef).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setImageList((prev) => [...prev, url]);
-        });
+          setIsFetching(false);
+        })
       });
     });
+  }
+  useEffect(() => {
+    loadItems();
   }, [])
 
   const onRefresh = async () => {
     setIsFetching(true);
-    setIsFetching(false);
+    setImageList([]);
+    loadItems();
   };
-
+  
   return (
     <SafeAreaView style={globalStyles.background}>
       <FlatList 
@@ -60,17 +64,10 @@ export default function Wishlist() {
       stickyHeaderIndices={[0]}
       renderItem={({item, index}) => 
         <TouchableOpacity>
-          <Image source={{uri : item}} style={{
-            width: imageW,
-            height: imageH,
-            resizeMode: 'cover',
-            borderRadius:30,
-            alignItems: 'center',
-            margin: 10,
-            }}/>
+          <Image source={{uri : item}} style={styles.image}/>
         </TouchableOpacity>}/>
     </SafeAreaView>
-);
+  );
 }
 
 const styles = StyleSheet.create({
@@ -85,4 +82,12 @@ const styles = StyleSheet.create({
     marginTop: -10,
     backgroundColor: '#00000000',
   },
+  image: {
+    width: imageW,
+    height: imageH,
+    resizeMode: 'cover',
+    borderRadius:30,
+    alignItems: 'center',
+    margin: 10,
+  }
 });

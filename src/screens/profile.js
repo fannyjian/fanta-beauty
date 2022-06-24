@@ -1,10 +1,11 @@
-import { StyleSheet,Text,View,TouchableOpacity,SafeAreaView} from "react-native";
+import { StyleSheet,Text,View,TouchableOpacity,SafeAreaView, ScrollView} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
 import React, { useEffect, useState } from "react";
 import { getAuth } from 'firebase/auth';
 import { useNavigation } from "@react-navigation/native";
 import { Avatar } from "react-native-elements";
 import { getDownloadURL, getStorage, ref } from "@firebase/storage";
+import { RefreshControl } from "react-native";
 
 const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
@@ -26,6 +27,7 @@ export default function Profile() {
 
   const [url, setUrl] = useState();
   const [name, setName] = useState();
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     setName(user.displayName);
@@ -43,7 +45,12 @@ export default function Profile() {
       })
     }
     func();
-  }, []);
+    setRefreshing(false);
+  }, [refreshing]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+  }
 
   const signOut = () => auth.signOut();
 
@@ -51,7 +58,8 @@ export default function Profile() {
       <SafeAreaView style={globalStyles.background}>
         <Text style = {globalStyles.header}>Profile.</Text>
 
-        <View style = {globalStyles.container}>
+        <ScrollView contentContainerStyle = {globalStyles.container} 
+                    refreshControl = {<RefreshControl refreshing = {refreshing} onRefresh = {onRefresh}/>} >
           
           <View style = {styles.image}>
             <Avatar source={{uri: url}} size = {200} rounded = {true}>
@@ -76,8 +84,7 @@ export default function Profile() {
           <View style={styles.screenContainer}>
               <LogoutButton title="log out" backgroundColor="#007bff" onPress = {signOut} />
           </View>
-
-        </View> 
+          </ScrollView>
       </SafeAreaView>
   )
 };
