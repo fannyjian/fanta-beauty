@@ -41,6 +41,7 @@ export default function Wishlist() {
       });
     });
   }
+  
   useEffect(() => {
     loadItems();
   }, [])

@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 
 export default function LoggedInNavigator() {
     return (
-        <Tab.Navigator 
+        <Tab.Navigator
             screenOptions={{headerShown:false, 
                             tabBarShowLabel: false, 
                             tabBarActiveTintColor:'white',
