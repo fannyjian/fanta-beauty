@@ -1,4 +1,4 @@
-import { StyleSheet,Text,View,TouchableOpacity,SafeAreaView, ScrollView} from "react-native";
+import { StyleSheet,Text,View,TouchableOpacity,SafeAreaView, ScrollView, Alert} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
 import React, { useEffect, useState } from "react";
 import { getAuth } from 'firebase/auth';
@@ -70,11 +70,11 @@ export default function Profile() {
           <Text style = {styles.name}>{name}</Text>
           
           <View style={styles.screenContainer}>
-              <AppButton title="my body" backgroundColor="#007bff" />
+              <AppButton title="my body" backgroundColor="#007bff"  onPress = { () => Alert.alert('This page is not available yet😭')}/>
           </View>
 
           <View style={styles.screenContainer}>
-              <AppButton title="saved looks" backgroundColor="#007bff" />
+              <AppButton title="saved looks" backgroundColor="#007bff" onPress = { () => Alert.alert('This page is not available yet😭')}/>
           </View>
 
           <View style={styles.screenContainer}>

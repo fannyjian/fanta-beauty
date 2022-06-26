@@ -1,11 +1,10 @@
 import React from 'react';
 import Home from '../screens/home';
-import Wishlist from '../screens/wishlist';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProfileNavigator from './profileNavigation';
-import TryOn from '../screens/tryOn';
 import UploadNavigator from './uploadNavigation';
+import Model from '../screens/model';
 
 const Tab = createBottomTabNavigator();
 

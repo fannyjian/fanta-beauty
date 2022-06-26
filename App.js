@@ -13,6 +13,7 @@ import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 import LoggedOutNavigator from './src/navigation/loggedOutNavigation';
 import LoggedInNavigator from './src/navigation/loggedInNavigation';
+import Model from './src/screens/model';
 
 
 export default function App() {
