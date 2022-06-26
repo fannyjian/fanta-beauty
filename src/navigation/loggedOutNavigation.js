@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, Button, Text} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Welcome from '../screens/authentication/welcome';
 import Login from '../screens/authentication/login';

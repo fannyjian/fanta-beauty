@@ -4,7 +4,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProfileNavigator from './profileNavigation';
 import UploadNavigator from './uploadNavigation';
-import Model from '../screens/model';
 
 const Tab = createBottomTabNavigator();
 
