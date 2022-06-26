@@ -1,10 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet,Text,View,Image,TouchableOpacity,SafeAreaView} from "react-native";
+import { StyleSheet,Text,View,TouchableOpacity,SafeAreaView, ScrollView, Alert} from "react-native";
 import { globalStyles } from '../../styles/globalStyles';
-import React, {useState} from "react";
-import BottomTab from "../tabs/bottomTab";
-import { AuthContext } from "../../App";
-import AsyncStorage, {useAsyncStorage} from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from "react";
+import { getAuth } from 'firebase/auth';
+import { useNavigation } from "@react-navigation/native";
+import { Avatar } from "react-native-elements";
+import { getDownloadURL, getStorage, ref } from "@firebase/storage";
+import { RefreshControl } from "react-native";
 
 const AppButton = ({ onPress, title }) => (
     <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
@@ -19,76 +20,107 @@ const LogoutButton = ({ onPress, title }) => (
   );
 
 
-export default function Profile({route, navigation}) {
-    const { signOut } = React.useContext(AuthContext);
+export default function Profile() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const navigation = useNavigation();
 
-    return(
-        <SafeAreaView style={globalStyles.background}>
-          <Text style = {globalStyles.header}>Profile.</Text>
+  const [url, setUrl] = useState();
+  const [name, setName] = useState();
+  const [refreshing, setRefreshing] = useState(false);
 
-          <View style = {globalStyles.container}>
-               
-            <Image style = {styles.image} source = {require("../../assets/profile-logo.png")}/>
-            
-            <Text style = {styles.name}>name</Text>
-            
-            <View style={styles.screenContainer}>
-                <AppButton title="my body" backgroundColor="#007bff" />
-            </View>
+  useEffect(() => {
+    setName(user.displayName);
+    const func = async () => {
+      const storage = getStorage();
+      const profileRef = ref(storage, 'profile/' + user.uid);
+      const defaultRef = ref(storage, 'profile/default-profile.jpg')
 
-            <View style={styles.screenContainer}>
-                <AppButton title="saved looks" backgroundColor="#007bff" />
-            </View>
+      await getDownloadURL(profileRef).then((result) => {
+        setUrl(result);
+      }).catch((error) => {
+        getDownloadURL(defaultRef).then((result) => {
+          setUrl(result);
+        })
+      })
+    }
+    func();
+    setRefreshing(false);
+  }, [refreshing]);
 
-            <View style={styles.screenContainer}>
-                <AppButton title="wishlist" backgroundColor="#007bff" />
-            </View>
+  const onRefresh = () => {
+    setRefreshing(true);
+  }
 
-            <View style={styles.screenContainer}>
-                <LogoutButton title="log out" backgroundColor="#007bff" onPress={signOut}/>
-            </View>
+  const signOut = () => auth.signOut();
 
-          </View> 
+  return(
+      <SafeAreaView style={globalStyles.background}>
+        <Text style = {globalStyles.header}>Profile.</Text>
 
-        <BottomTab navigation= { navigation }/>
+        <ScrollView contentContainerStyle = {globalStyles.container} 
+                    refreshControl = {<RefreshControl refreshing = {refreshing} onRefresh = {onRefresh}/>} >
+          
+          <View style = {styles.image}>
+            <Avatar source={{uri: url}} size = {200} rounded = {true}>
+              <Avatar.Accessory size = {40} onPress = {() => navigation.navigate('EditProfileScreen')} />
+            </Avatar>
+          </View>
+          
+          <Text style = {styles.name}>{name}</Text>
+          
+          <View style={styles.screenContainer}>
+              <AppButton title="my body" backgroundColor="#007bff"  onPress = { () => Alert.alert('This page is not available yet😭')}/>
+          </View>
 
-        </SafeAreaView>
-);
+          <View style={styles.screenContainer}>
+              <AppButton title="saved looks" backgroundColor="#007bff" onPress = { () => Alert.alert('This page is not available yet😭')}/>
+          </View>
+
+          <View style={styles.screenContainer}>
+              <AppButton title="wishlist" backgroundColor="#007bff" onPress = {() => navigation.navigate('WishlistScreen')} />
+          </View>
+
+          <View style={styles.screenContainer}>
+              <LogoutButton title="log out" backgroundColor="#007bff" onPress = {signOut} />
+          </View>
+          </ScrollView>
+      </SafeAreaView>
+  )
 };
 
 const styles = StyleSheet.create({
-    image :{
-        flex: 0.6,
-        width: 350,
-        height: 350,
-        justifyContent: 'flex-end'
-    },
-    name: {
-        fontSize: 20,
-        fontFamily: "AbrilFatface_400Regular",
-        color: "black",
-        borderBottomWidth: 25,
-    },
-    screenContainer: {
-        justifyContent: "flex-start",
-        padding: 16,
-      },
-      appButtonContainer: {
-        width: 300,
-        backgroundColor: "white",
-        borderRadius: 40,
-        paddingVertical: 10,
-      },
-      appButtonText: {
-        fontSize: 25,
-        fontFamily: "AbrilFatface_400Regular",
-        color: "black",
-        alignSelf: "center",
-      },
-      logoutButtonText: {
-        fontSize: 20,
-        fontFamily: "AbrilFatface_400Regular",
-        color: "#DDC2EF",
-        alignSelf: "center",
-      }
+  image: {
+    marginTop: 20,
+  },
+  name: {
+    marginTop: 10,
+    marginBottom: -10,
+    fontSize: 20,
+    fontFamily: "AbrilFatface_400Regular",
+    color: "black",
+    borderBottomWidth: 25,
+  },
+  screenContainer: {
+    justifyContent: "flex-start",
+    padding: 16,
+  },
+  appButtonContainer: {
+    width: 300,
+    backgroundColor: "white",
+    borderRadius: 40,
+    paddingVertical: 10,
+  },
+  appButtonText: {
+    fontSize: 25,
+    fontFamily: "AbrilFatface_400Regular",
+    color: "black",
+    alignSelf: "center",
+  },
+  logoutButtonText: {
+    fontSize: 20,
+    fontFamily: "AbrilFatface_400Regular",
+    color: "#DDC2EF",
+    alignSelf: "center",
+  },
 });

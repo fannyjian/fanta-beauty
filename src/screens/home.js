@@ -1,7 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList, Button } from 'react-native';
-import React, {useState} from "react";
-import BottomTab from "../tabs/bottomTab";
+import { StyleSheet, Text, View, Image, SafeAreaView, Dimensions, FlatList } from 'react-native';
+import React from "react";
+import { globalStyles } from '../../styles/globalStyles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const data = [
   'https://cdn-images.farfetch-contents.com/18/41/36/44/18413644_39547459_1000.jpg',
@@ -13,84 +13,52 @@ const data = [
 ]
 const { width, height } = Dimensions.get('screen');
 const imageW = width;
-const imageH = height * 0.6;
+const imageH = height * 0.65;
 
-export default function Home({navigation}) {
-
-
+export default function Home() {
   return (
-    <SafeAreaView style={styles.background}>
+    <SafeAreaView style={globalStyles.background}>
+        <Text style={globalStyles.header}>Hey!</Text>
+
       <View>
-        <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:60, margin: 10, left: 20}}>Hey!</Text>
+        <FlatList 
+        data={data}
+        keyExtractor={(_, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        renderItem={({item}) => {
+          return <TouchableOpacity>
+                  <Image source={{uri : item}} style={styles.picture}/>
+                </TouchableOpacity>
+        }}
+        />
+
+        {data.map(( item, i ) => (<View key={item}/>))}
+        
+        <Text style={styles.text}>welcome to {'\n'}fanta beauty.</Text>
       </View>
-
-    <View>
-      <FlatList 
-      data={data}
-      keyExtractor={(_, index) => index.toString()}
-      horizontal
-      pagingEnabled
-      renderItem={({item}) => {
-        return <View style={{width}}>
-                <Image source={{uri : item}} style={{
-                  width: imageW,
-                  height: imageH,
-                  resizeMode: 'cover',
-                  borderRadius:80,
-                  alignItems: 'center'
-                }}/>
-              </View>
-      }}
-      />
-
-      <View style={styles.circleDiv}>
-        {data.map(( item, i ) => (
-          <View
-          key={item}
-          style={[styles.whiteCircle,
-          ]}
-          />
-        ))}
-      </View>
-      
-    <View>
-      <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:25, margin: 6, color: 'white', shadowColor: 'black', shadowOffset: {width: 5, height: 5}, shadowOpacity: 0.4, shadowRadius: 3, left:190}}>welcome to {'\n'}
-    fanta beauty.</Text>
-    </View>
-    </View>
-
-    <BottomTab navigation = {navigation }/>
-
     </SafeAreaView>
 );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: '#F3E9F6',
-  },
   picture: {
-    flex: 1,
+    width: imageW,
+    height: imageH,
+    resizeMode: 'cover',
+    borderRadius:80,
     alignItems: 'center',
   },
-
-  circleDiv: {
-    position: 'absolute',
-    bottom: 90,
-    height: 10,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  whiteCircle: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    margin: 5,
-    backgroundColor: 'white',
-
+  text: {
+    fontFamily: 'AbrilFatface_400Regular', 
+    fontSize:30, 
+    marginTop: -25,
+    margin: 6, 
+    color: 'white', 
+    shadowColor: 'black', 
+    shadowOffset: {width: 5, height: 5}, 
+    shadowOpacity: 0.4, 
+    shadowRadius: 3, 
+    left:190
   }
 });
