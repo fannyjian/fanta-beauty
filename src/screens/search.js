@@ -14,15 +14,19 @@ export default function Search() {
   const user = auth.currentUser;
   const firestore = getFirestore();
 
-  const [postList, setPostList] = useState([]);
+  const [masterData, setMasterData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [search, setSearch] = useState('');
 
   const loadItems = async () => {
+    const postList = [];
     const posts = await collectionGroup(firestore, 'posts');
     const querySnapshot = await getDocs(posts);
     querySnapshot.forEach((post) => {
-      setPostList((prev) => [...prev, post.data()]);
+      postList.push(post.data());
     });
+    setMasterData(postList);
+    setFilteredData(postList);
   };
 
   useEffect(() => {
@@ -30,7 +34,20 @@ export default function Search() {
   }, [])
 
   const searchFunction = (query) => {
-    setSearch(query)
+    if (query) {
+      const newData = masterData.filter((item) => {
+        const itemData = item.Title 
+                          ? item.Title.toUpperCase() 
+                          : ''.toUpperCase();
+        const textData = query.toUpperCase()
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+      setSearch(query);
+    } else {
+      setFilteredData(masterData);
+      setSearch(query);
+    }
   }
 
   
@@ -45,7 +62,7 @@ export default function Search() {
         />
 
         <FlatList 
-        data={postList}
+        data={filteredData}
         style = {{marginBottom: height * 0.06}}
         contentContainerStyle = {{ alignSelf:"center"}}
         renderItem={({item}) => 

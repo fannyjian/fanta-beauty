@@ -16,7 +16,6 @@ import { getAuth } from "firebase/auth";
 import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
-import { render } from "react-dom";
 
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.45;
