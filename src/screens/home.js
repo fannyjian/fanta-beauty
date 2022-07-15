@@ -1,96 +1,157 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, Dimensions, FlatList, Button } from 'react-native';
-import React, {useState} from "react";
-import BottomTab from "../tabs/bottomTab";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  SafeAreaView,
+  Dimensions,
+  FlatList,
+  View,
+  ActivityIndicator,
+  Pressable,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { globalStyles } from "../../styles/globalStyles";
+import { getAuth } from "firebase/auth";
+import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { useNavigation } from "@react-navigation/native";
+import { render } from "react-dom";
 
-const data = [
-  'https://cdn-images.farfetch-contents.com/18/41/36/44/18413644_39547459_1000.jpg',
-  'https://cdn-static.farfetch-contents.com/cms-cm/sg/media/3536972/data/096e98e92c3d2ff52d07b3ebf0dc56c4.jpg?ratio=1x1_messaging-side&minWidth=637',
-  'https://cdn-images.farfetch-contents.com/16/87/29/03/16872903_34569968_1000.jpg',
-  'https://cdn-images.farfetch-contents.com/16/02/03/04/16020304_30929116_1000.jpg',
-  'https://cdn-images.farfetch-contents.com/17/74/56/82/17745682_38770936_1000.jpg',
+const { width, height } = Dimensions.get("screen");
+const imageW = width * 0.45;
+const imageH = height * 0.25;
 
-]
-const { width, height } = Dimensions.get('screen');
-const imageW = width;
-const imageH = height * 0.6;
+export default function Home() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const firestore = getFirestore();
+  const navigation = useNavigation();
 
-export default function Home({navigation}) {
+  const [isFetching, setIsFetching] = useState(false);
+  const [postList, setPostList] = useState([]);
 
+  const loadItems = async () => {
+    const posts = await collectionGroup(firestore, "posts");
+    const querySnapshot = await getDocs(posts);
+    querySnapshot.forEach((post) => {
+      setPostList((prev) => [...prev, post.data()]);
+      setIsFetching(false);
+    });
+  };
+
+  useEffect(() => {
+    loadItems();
+  }, []);
+
+  const onRefresh = async () => {
+    setIsFetching(true);
+    setPostList([]);
+    loadItems();
+  };
+
+  const HeaderComponent = () => (
+    <View>
+      <View style={{ flexDirection: "row", margin: 10 }}>
+        <Text style={styles.header}>Feed.</Text>
+        <View
+          style={{
+            alignItems: "flex-end",
+            marginBottom: 10,
+            marginLeft: width * 0.22,
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
+            <MaterialCommunityIcons
+              name="magnify"
+              size={50}
+              color={"#DDC2EF"}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <MaterialCommunityIcons
+              name="filter-outline"
+              size={50}
+              color={"#DDC2EF"}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 
   return (
-    <SafeAreaView style={styles.background}>
-      <View>
-        <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:60, margin: 10, left: 20}}>Hey!</Text>
-      </View>
-
-    <View>
-      <FlatList 
-      data={data}
-      keyExtractor={(_, index) => index.toString()}
-      horizontal
-      pagingEnabled
-      renderItem={({item}) => {
-        return <View style={{width}}>
-                <Image source={{uri : item}} style={{
-                  width: imageW,
-                  height: imageH,
-                  resizeMode: 'cover',
-                  borderRadius:80,
-                  alignItems: 'center'
-                }}/>
-              </View>
-      }}
+    <SafeAreaView style={globalStyles.background}>
+      <FlatList
+        data={postList}
+        // keyExtractor={(item) => item.id.toString()}
+        onRefresh={onRefresh}
+        numColumns={2}
+        refreshing={isFetching}
+        style={{ marginBottom: height * 0.06 }}
+        contentContainerStyle={{ alignSelf: "center" }}
+        ListHeaderComponent={HeaderComponent}
+        stickyHeaderIndices={[0]}
+        renderItem={({ item, index }) => (
+          <Pressable
+            style={styles.card}
+            onPress={() =>
+              navigation.navigate("Details", { initialScroll: index })
+            }
+          >
+            <Image
+              source={{ uri: item.Image }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+            <Text style={styles.title}>{item.Title}</Text>
+          </Pressable>
+        )}
       />
-
-      <View style={styles.circleDiv}>
-        {data.map(( item, i ) => (
-          <View
-          key={item}
-          style={[styles.whiteCircle,
-          ]}
-          />
-        ))}
-      </View>
-      
-    <View>
-      <Text style={{fontFamily: 'AbrilFatface_400Regular', fontSize:25, margin: 6, color: 'white', shadowColor: 'black', shadowOffset: {width: 5, height: 5}, shadowOpacity: 0.4, shadowRadius: 3, left:190}}>welcome to {'\n'}
-    fanta beauty.</Text>
-    </View>
-    </View>
-
-    <BottomTab navigation = {navigation }/>
-
     </SafeAreaView>
-);
+  );
 }
 
 const styles = StyleSheet.create({
-  background: {
+  row: {
     flex: 1,
-    backgroundColor: '#F3E9F6',
+    justifyContent: "space-around",
   },
-  picture: {
-    flex: 1,
-    alignItems: 'center',
+  header: {
+    fontFamily: "AbrilFatface_400Regular",
+    fontSize: 60,
+    backgroundColor: "#00000000",
+  },
+  image: {
+    // width: width * 0.9,
+    // height: width * 0.9,
+    // resizeMode: "cover",
+    // borderRadius: 10,
+    width: imageW,
+    height: imageH,
+    resizeMode: "cover",
+    borderRadius: 20,
+    alignItems: "center",
+    margin: 10,
+  },
+  card: {
+    width: width * 0.5,
+    height: height * 0.3,
+    backgroundColor: "#00000000",
+    marginBottom: width * 0.05,
+    alignItems: "center",
+    // borderRadius: 10,
+    // backgroundColor: "white"
   },
 
-  circleDiv: {
-    position: 'absolute',
-    bottom: 90,
-    height: 10,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+  title: {
+    fontFamily: "AbrilFatface_400Regular",
+    fontSize: 15,
+    color: "black",
+    shadowRadius: 3,
+    marginHorizontal: width * 0.01,
+    alignSelf: "flex-start",
   },
-  whiteCircle: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    margin: 5,
-    backgroundColor: 'white',
-
-  }
 });
