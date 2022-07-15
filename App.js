@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
 
 // Imports for Firebase
 import { initializeApp } from 'firebase/app';
@@ -15,7 +16,6 @@ import LoggedOutNavigator from './src/navigation/loggedOutNavigation';
 import LoggedInNavigator from './src/navigation/loggedInNavigation';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UploadPost from './src/screens/uploadPost';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
