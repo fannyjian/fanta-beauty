@@ -13,7 +13,7 @@ export default function HomeNavigator() {
       component="HomeScreen"
     >
       <Stack.Screen name="HomeScreen" component={Home} />
-      <Stack.Screen name="SearchScreen" component={Search} />
+      <Stack.Screen name="SearchScreen" component={Search}/>
       <Stack.Screen name="Details" component={Details} />
     </Stack.Navigator>
   );
