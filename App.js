@@ -19,6 +19,8 @@ import UploadPost from './src/screens/uploadPost';
 
 const Stack = createNativeStackNavigator();
 
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
   let [fontsLoaded, error]= useFonts({
     AbrilFatface_400Regular 
@@ -42,8 +44,10 @@ export default function App() {
     if (user) {
       const uid = user.uid;
       setIsLoggedIn(true);
+      setTimeout(() => SplashScreen.hideAsync(), 100)
     } else {
       setIsLoggedIn(false);
+      setTimeout(() => SplashScreen.hideAsync(), 100)
     }
   });
 
