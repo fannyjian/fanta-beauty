@@ -14,7 +14,6 @@ import { globalStyles } from "../../styles/globalStyles";
 import { getAuth } from "firebase/auth";
 import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Searchbar } from "react-native-paper";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -23,33 +22,41 @@ export default function Details({ navigation, route }) {
   const user = auth.currentUser;
   const firestore = getFirestore();
 
-  const [postList, setPostList] = useState([]);
-  const [search, setSearch] = useState("");
+  const HeaderComponent = () => (
+    <View>
+      <View style={{ flexDirection: "row", margin: 10 }}>
+        <Text style={styles.header}>Details.</Text>
+        <View
+          style={{
+            alignItems: "flex-end",
+            marginBottom: 10,
+            marginLeft: width * 0.2,
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
+            <MaterialCommunityIcons
+              name="magnify"
+              size={50}
+              color={"#DDC2EF"}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 
-  const loadItems = async () => {
-    const posts = await collectionGroup(firestore, "posts");
-    const querySnapshot = await getDocs(posts);
-    querySnapshot.forEach((post) => {
-      setPostList((prev) => [...prev, post.data()]);
-    });
-  };
-
-  useEffect(() => {
-    loadItems();
-  }, []);
-
-  const searchFunction = (query) => {
-    setSearch(query);
-  };
 
   return (
     <SafeAreaView style={globalStyles.background}>
       <FlatList
-        data={postList}
-        // keyExtractor={(item) => item.id.toString()}
-        // initialScrollIndex={route.params.initialScroll || 0}
+        data={route.params.data}
+        initialScrollIndex={route.params.initialScroll}
+        getItemLayout={( data, index) => ({length: height * 0.6, offset: height * 0.6 * index, index})}        
         style={{ marginBottom: height * 0.06 }}
         contentContainerStyle={{ alignSelf: "center" }}
+        ListHeaderComponent={HeaderComponent}
+        stickyHeaderIndices={[0]}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.card}>
             <Image
@@ -83,8 +90,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#00000000",
     marginBottom: width * 0.05,
     alignItems: "center",
-    // borderRadius: 10,
-    // backgroundColor: "white"
+
+  },
+  header: {
+    fontFamily: "AbrilFatface_400Regular",
+    fontSize: 60,
+    color: "white",
+    backgroundColor: "#00000000",
   },
   text: {
     marginTop: width * 0.02,

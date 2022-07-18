@@ -13,7 +13,7 @@ import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { globalStyles } from "../../styles/globalStyles";
 import { getAuth } from "firebase/auth";
-import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
+import { getDocs, getFirestore, collectionGroup, collection, query, where } from "firebase/firestore";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -79,7 +79,6 @@ export default function Home() {
     <SafeAreaView style={globalStyles.background}>
       <FlatList
         data={postList}
-        // keyExtractor={(item) => item.id.toString()}
         onRefresh={onRefresh}
         numColumns={2}
         refreshing={isFetching}
@@ -91,7 +90,7 @@ export default function Home() {
           <Pressable
             style={styles.card}
             onPress={() =>
-              navigation.navigate("Details", { initialScroll: index })
+              navigation.navigate("Details", { initialScroll: index, data: postList })
             }
           >
             <Image
