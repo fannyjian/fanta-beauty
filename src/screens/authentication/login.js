@@ -68,7 +68,7 @@ export default function Login({navigation}) {
             </TouchableOpacity>
 
             <TouchableOpacity>
-                <Text style={globalStyles.goBack} onPress = {() => navigation.goBack()}>Back to Welcome Page</Text>
+                <Text style={globalStyles.goBack} onPress = {() => navigation.goBack()}>Back to Welcome.</Text>
             </TouchableOpacity> 
             </KeyboardAwareScrollView>
 

@@ -14,7 +14,7 @@ export default function ProfileNavigator() {
     >
       <Stack.Screen name="ProfileScreen" component={Profile} />
       <Stack.Screen name="EditProfileScreen" component={EditProfile} />
-      <Stack.Screen name="CollectsScreen" component={Collects} />
+      {/* <Stack.Screen name="CollectsScreen" component={Collects} /> */}
     </Stack.Navigator>
   );
 }
