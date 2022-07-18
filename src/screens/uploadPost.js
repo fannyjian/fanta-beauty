@@ -28,6 +28,7 @@ import { v4 } from "uuid";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import DropDownPicker from "react-native-dropdown-picker";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 export default function UploadPost() {
   const auth = getAuth();
   const user = auth.currentUser;

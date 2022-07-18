@@ -16,7 +16,6 @@ import { getAuth } from "firebase/auth";
 import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
-import { render } from "react-dom";
 
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.45;
@@ -32,12 +31,14 @@ export default function Home() {
   const [postList, setPostList] = useState([]);
 
   const loadItems = async () => {
+    const data = [];
     const posts = await collectionGroup(firestore, "posts");
     const querySnapshot = await getDocs(posts);
     querySnapshot.forEach((post) => {
-      setPostList((prev) => [...prev, post.data()]);
-      setIsFetching(false);
+      data.push(post.data())
     });
+    setPostList(data);
+    setIsFetching(false);
   };
 
   useEffect(() => {
@@ -58,21 +59,13 @@ export default function Home() {
           style={{
             alignItems: "flex-end",
             marginBottom: 10,
-            marginLeft: width * 0.22,
+            marginLeft: width * 0.43,
             flexDirection: "row",
           }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
             <MaterialCommunityIcons
               name="magnify"
-              size={50}
-              color={"#DDC2EF"}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <MaterialCommunityIcons
-              name="filter-outline"
               size={50}
               color={"#DDC2EF"}
             />
