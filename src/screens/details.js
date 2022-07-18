@@ -25,12 +25,12 @@ export default function Details({ navigation, route }) {
   const HeaderComponent = () => (
     <View>
       <View style={{ flexDirection: "row", margin: 10 }}>
-        <Text style={styles.header}>Details.</Text>
+        {/* <Text style={styles.header}>Details.</Text> */}
         <View
           style={{
             alignItems: "flex-end",
             marginBottom: 10,
-            marginLeft: width * 0.2,
+            marginLeft: width * 0.7,
             flexDirection: "row",
           }}
         >

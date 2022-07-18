@@ -13,19 +13,17 @@ import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { globalStyles } from "../../styles/globalStyles";
 import { getAuth } from "firebase/auth";
-import { getDocs, getFirestore, collectionGroup, collection, query, where } from "firebase/firestore";
+import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.45;
 const imageH = height * 0.25;
 
-export default function Home() {
+export default function Home({navigation}) {
   const auth = getAuth();
   const user = auth.currentUser;
   const firestore = getFirestore();
-  const navigation = useNavigation();
 
   const [isFetching, setIsFetching] = useState(false);
   const [postList, setPostList] = useState([]);
@@ -37,6 +35,7 @@ export default function Home() {
     querySnapshot.forEach((post) => {
       data.push(post.data())
     });
+    data.sort((a, b) => b.Date - a.Date)
     setPostList(data);
     setIsFetching(false);
   };
@@ -63,7 +62,7 @@ export default function Home() {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen", {data: postList})}>
             <MaterialCommunityIcons
               name="magnify"
               size={50}

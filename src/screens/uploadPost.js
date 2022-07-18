@@ -135,7 +135,7 @@ export default function UploadPost() {
         UserId: user.uid,
       });
     });
-    navigation.navigate("ProfileScreens");
+    navigation.navigate("HomeScreens");
   };
 
   const UploadButtons = () =>

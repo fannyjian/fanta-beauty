@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View } from 'react-native';
 import { useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -16,6 +17,8 @@ import LoggedOutNavigator from './src/navigation/loggedOutNavigation';
 import LoggedInNavigator from './src/navigation/loggedInNavigation';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UploadPost from './src/screens/uploadPost';
+import { useEffect, useCallback } from 'react';
+import { collectionGroup, getDocs, getFirestore } from 'firebase/firestore';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,23 +40,58 @@ export default function App() {
   };
 
   const app = initializeApp(firebaseConfig);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const auth = getAuth(app);
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      setIsLoggedIn(true);
-      setTimeout(() => SplashScreen.hideAsync(), 100)
-    } else {
-      setIsLoggedIn(false);
-      setTimeout(() => SplashScreen.hideAsync(), 100)
-    }
-  });
+  const firestore = getFirestore();
 
+  const [appIsReady, setAppIsReady] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [postList, setPostList] = useState([]);
+
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // setting up authentication
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const uid = user.uid;
+            setIsLoggedIn(true);
+          } else {
+            setIsLoggedIn(false);
+          }
+        });
+
+        // fetching posts
+        const data = [];
+        const posts = await collectionGroup(firestore, "posts");
+        const querySnapshot = await getDocs(posts);
+        querySnapshot.forEach((post) => {
+          data.push(post.data())
+        });
+        setPostList(data);
+
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady && fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
 
   return (
-      (!fontsLoaded) ? null : (
+      <View style = {{flex: 1}} onLayout = {onLayoutRootView}>
         <NavigationContainer>                 
             {(!isLoggedIn && fontsLoaded) 
             ? <LoggedOutNavigator/> 
@@ -61,8 +99,8 @@ export default function App() {
               <Stack.Screen name = "Main" component={LoggedInNavigator}/>
               <Stack.Screen name = "Upload" component = {UploadPost} options={{presentation: 'modal'}}/>
             </Stack.Navigator>
-
             }
         </NavigationContainer>
-  ));
+      </View>
+  );
 }

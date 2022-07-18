@@ -9,29 +9,14 @@ import { Searchbar } from 'react-native-paper';
 
 const { width, height } = Dimensions.get('screen');
 
-export default function Search() {
+export default function Search({route}) {
   const auth = getAuth();
   const user = auth.currentUser;
   const firestore = getFirestore();
 
-  const [masterData, setMasterData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+  const [masterData, setMasterData] = useState(route.params.data);
+  const [filteredData, setFilteredData] = useState(route.params.data);
   const [search, setSearch] = useState('');
-
-  const loadItems = async () => {
-    const postList = [];
-    const posts = await collectionGroup(firestore, 'posts');
-    const querySnapshot = await getDocs(posts);
-    querySnapshot.forEach((post) => {
-      postList.push(post.data());
-    });
-    setMasterData(postList);
-    setFilteredData(postList);
-  };
-
-  useEffect(() => {
-    loadItems();
-  }, [])
 
   const searchFunction = (query) => {
     if (query) {
