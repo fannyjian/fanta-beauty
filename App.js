@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -71,7 +71,7 @@ export default function App() {
         setPostList(data);
 
       } catch (e) {
-        console.warn(e);
+        Alert.alert("App loading failed. Please try again!")
       } finally {
         setAppIsReady(true);
       }

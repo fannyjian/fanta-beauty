@@ -96,7 +96,7 @@ export default function Register({navigation}) {
             </View>
 
             <TouchableOpacity style={globalStyles.button} onPress = {handleRegister} >
-                <Text style={globalStyles.avenirFont}>REGISTER NOW</Text>
+                <Text style={styles.text}>register.</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
@@ -121,5 +121,10 @@ const styles = StyleSheet.create({
   },
   container: {
     margin: 50,
-  }
+  },
+  text: {
+    fontFamily: 'AbrilFatface_400Regular', 
+    color: '#F3E9F9',
+    fontSize: 20,
+},
 });

@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
       marginTop: -30,
     },
     text: {
-        fontFamily: 'Avenir', 
-        fontSize: 18,
+        fontFamily: 'AbrilFatface_400Regular', 
+        color: '#F3E9F9',
+        fontSize: 20,
     },
   });
