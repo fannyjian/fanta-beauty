@@ -21,11 +21,14 @@ export default function Search({route}) {
   const searchFunction = (query) => {
     if (query) {
       const newData = masterData.filter((item) => {
-        const itemData = item.Title 
+        const titleData = item.Title 
                           ? item.Title.toUpperCase() 
                           : ''.toUpperCase();
+        const catData = item.Category
+                          ? item.Category.toUpperCase() 
+                          : ''.toUpperCase();
         const textData = query.toUpperCase()
-        return itemData.indexOf(textData) > -1;
+        return titleData.indexOf(textData) > -1 || catData.indexOf(textData) > -1;
       });
       setFilteredData(newData);
       setSearch(query);

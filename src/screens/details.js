@@ -25,7 +25,6 @@ export default function Details({ navigation, route }) {
   const HeaderComponent = () => (
     <View>
       <View style={{ flexDirection: "row", margin: 10 }}>
-        {/* <Text style={styles.header}>Details.</Text> */}
         <View
           style={{
             alignItems: "flex-end",
@@ -34,7 +33,7 @@ export default function Details({ navigation, route }) {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen", {data: route.params.data})}>
             <MaterialCommunityIcons
               name="magnify"
               size={50}
@@ -46,6 +45,19 @@ export default function Details({ navigation, route }) {
     </View>
   );
 
+  const renderItem = ({ item }) => {
+    return(
+      <TouchableOpacity style={styles.card}>
+        <Image
+          source={{ uri: item.Image }}
+          style={styles.image}
+          resizeMode="cover"
+        />
+        <Text style={styles.title}>{item.Title}</Text>
+        <Text style={styles.text}>{item.Review}</Text>
+      </TouchableOpacity>
+    );
+  }
 
   return (
     <SafeAreaView style={globalStyles.background}>
@@ -57,17 +69,7 @@ export default function Details({ navigation, route }) {
         contentContainerStyle={{ alignSelf: "center" }}
         ListHeaderComponent={HeaderComponent}
         stickyHeaderIndices={[0]}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card}>
-            <Image
-              source={{ uri: item.Image }}
-              style={styles.image}
-              resizeMode="cover"
-            />
-            <Text style={styles.title}>{item.Title}</Text>
-            <Text style={styles.text}>{item.Review}</Text>
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
       />
     </SafeAreaView>
   );
