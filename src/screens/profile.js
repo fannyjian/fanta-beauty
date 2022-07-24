@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Avatar } from "react-native-elements";
 import { getDownloadURL, getStorage, ref } from "@firebase/storage";
 import { RefreshControl } from "react-native";
+import SavePost from "./savePost";
 
 const AppButton = ({ onPress, title }) => (
   <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
@@ -89,7 +90,7 @@ export default function Profile() {
           <AppButton
             title="Collects"
             backgroundColor="#007bff"
-            onPress={() => Alert.alert("This page is not available yet😭")}
+            onPress={() => navigation.navigate("SavePost")}
           />
         </View>
 

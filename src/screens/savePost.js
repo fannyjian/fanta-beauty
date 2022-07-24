@@ -7,13 +7,24 @@ import {
   FlatList,
   View,
   ActivityIndicator,
+  TouchableHighlight,
   Pressable,
+  Interaction,
+  InteractionText,
+  Button,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { globalStyles } from "../../styles/globalStyles";
 import { getAuth } from "firebase/auth";
-import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
+import { ref, listAll, getDownloadURL, getStorage } from "@firebase/storage";
+import {
+  doc,
+  getDocs,
+  getFirestore,
+  collectionGroup,
+} from "firebase/firestore";
+import { v4 } from "uuid";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -21,24 +32,63 @@ const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.45;
 const imageH = height * 0.25;
 
-export default function Home({ navigation }) {
+export default function SavePost({ navigation }) {
+  //   const uri = props.route.params.image;
+  //   const childPath =
+  //     "reviews/${firebase.auth().currentUser.uid}/${Math.random().toString(36)}";
+  //   console.log(childPath);
+  //   const uploadImage = async () => {
+  //     const response = await fetch(uri);
+  //     const blob = await response.blob();
+  //     const task = firebase.storage().ref().child(childPath).put(blob);
+  //     const taskProgress = (snapshot) => {
+  //       console.log("transferred: ${snapshot.bytesTransferred}");
+  //     };
+  //     const taskCompleted = () => {
+  //       task.snapshot.ref.getDownloadURL().then((snapshot) => {
+  //         console.log(snapshot);
+  //       });
+  //     };
+  //     const taskError = (snapshot) => {
+  //       console.log(snapshot);
+  //     };
+  //     task.on("state_changed", taskProgress, taskError, taskCompleted);
+  //   };
+  //   return (
+  //     <View>
+  //       <Image source={{ uri: props.route.params.image }} />
+
+  //       <Button title="save" onPress={() => uploadImage()} />
+
+  //       <TouchableOpacity onPress={uploadImage}>
+  //         <MaterialCommunityIcons
+  //           name="image-outline"
+  //           color={"#DDC2EF"}
+  //           size={height * 0.06}
+  //         />
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // }
   const auth = getAuth();
   const user = auth.currentUser;
   const firestore = getFirestore();
+  const storage = getStorage();
+  const storageRef = ref(storage, "save/" + user.uid + "/" + v4());
 
   const [isFetching, setIsFetching] = useState(false);
-  const [postList, setPostList] = useState([]);
+  const [saveList, setSaveList] = useState([]);
+  const saveListRef = ref(storage, "save/" + user.uid + "/");
 
-  const loadItems = async () => {
-    const data = [];
-    const posts = await collectionGroup(firestore, "posts");
-    const querySnapshot = await getDocs(posts);
-    querySnapshot.forEach((post) => {
-      data.push(post.data());
+  const loadItems = () => {
+    listAll(saveListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setSaveList((prev) => [...prev, url]);
+          setIsFetching(false);
+        });
+      });
     });
-    data.sort((a, b) => b.Date - a.Date);
-    setPostList(data);
-    setIsFetching(false);
   };
 
   useEffect(() => {
@@ -47,34 +97,22 @@ export default function Home({ navigation }) {
 
   const onRefresh = async () => {
     setIsFetching(true);
-    setPostList([]);
+    setSaveList([]);
     loadItems();
   };
 
   const HeaderComponent = () => (
     <View>
       <View style={{ flexDirection: "row", margin: 10 }}>
-        <Text style={styles.header}>Feed.</Text>
+        <Text style={styles.header}>Collects.</Text>
         <View
           style={{
             alignItems: "flex-end",
             marginBottom: 10,
-            marginLeft: width * 0.43,
+            marginLeft: width * 0.2,
             flexDirection: "row",
           }}
-        >
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("SearchScreen", { data: postList })
-            }
-          >
-            <MaterialCommunityIcons
-              name="magnify"
-              size={50}
-              color={"#DDC2EF"}
-            />
-          </TouchableOpacity>
-        </View>
+        ></View>
       </View>
     </View>
   );
@@ -82,7 +120,7 @@ export default function Home({ navigation }) {
   return (
     <SafeAreaView style={globalStyles.background}>
       <FlatList
-        data={postList}
+        data={saveList}
         onRefresh={onRefresh}
         numColumns={2}
         refreshing={isFetching}

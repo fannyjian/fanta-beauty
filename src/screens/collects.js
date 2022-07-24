@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Dimensions,
   FlatList,
+  Pressable,
 } from "react-native";
 import * as React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -17,7 +18,7 @@ const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.4;
 const imageH = height * 0.2;
 
-export default function Collects() {
+export default function Collects({ navigation }) {
   const auth = getAuth();
   const user = auth.currentUser;
   const storage = getStorage();
@@ -59,9 +60,22 @@ export default function Collects() {
         ListHeaderComponent={<Text style={styles.header}>Posts.</Text>}
         stickyHeaderIndices={[0]}
         renderItem={({ item, index }) => (
-          <TouchableOpacity>
-            <Image source={{ uri: item }} style={styles.image} />
-          </TouchableOpacity>
+          <Pressable
+            style={styles.card}
+            onPress={() =>
+              navigation.navigate("Details", {
+                initialScroll: index,
+                data: imageList,
+              })
+            }
+          >
+            <Image
+              source={{ uri: item.Image }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+            <Text style={styles.title}>{item.Title}</Text>
+          </Pressable>
         )}
       />
     </SafeAreaView>

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "../screens/profile";
 import EditProfile from "../screens/editProfile";
 import Collects from "../screens/collects";
+import SavePost from "../screens/savePost";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +16,7 @@ export default function ProfileNavigator() {
       <Stack.Screen name="ProfileScreen" component={Profile} />
       <Stack.Screen name="EditProfileScreen" component={EditProfile} />
       <Stack.Screen name="CollectsScreen" component={Collects} />
+      <Stack.Screen name="SavePost" component={SavePost} />
     </Stack.Navigator>
   );
 }

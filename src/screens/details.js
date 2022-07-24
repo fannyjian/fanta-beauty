@@ -7,60 +7,157 @@ import {
   FlatList,
   View,
   ActivityIndicator,
+  TouchableHighlight,
+  Pressable,
+  Interaction,
+  InteractionText,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { globalStyles } from "../../styles/globalStyles";
 import { getAuth } from "firebase/auth";
-import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+} from "@firebase/storage";
+import {
+  doc,
+  getDocs,
+  getFirestore,
+  collectionGroup,
+} from "firebase/firestore";
+import { v4 } from "uuid";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Searchbar } from "react-native-paper";
 
 const { width, height } = Dimensions.get("screen");
 
 export default function Details({ navigation, route }) {
+  const [image, setImage] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [review, setReview] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const auth = getAuth();
   const user = auth.currentUser;
+  const storage = getStorage();
+  const storageRef = ref(storage, "save/" + user.uid + "/" + v4());
   const firestore = getFirestore();
 
-  const [postList, setPostList] = useState([]);
-  const [search, setSearch] = useState("");
+  const savePost = async () => {
+    const img = await fetch(route.params.data);
 
-  const loadItems = async () => {
-    const posts = await collectionGroup(firestore, "posts");
-    const querySnapshot = await getDocs(posts);
-    querySnapshot.forEach((post) => {
-      setPostList((prev) => [...prev, post.data()]);
+    const bytes = await img.blob();
+    await uploadBytes(storageRef, bytes);
+    getDownloadURL(storageRef).then((url) => {
+      setDoc(doc(firestore, "save", user.uid, "savedPosts", v4()), {
+        Image: url,
+        Category: category,
+        Title: title,
+        Review: review,
+        Date: new Date(),
+        UserId: user.uid,
+      });
     });
   };
 
-  useEffect(() => {
-    loadItems();
-  }, []);
+  const HeaderComponent = () => (
+    <View>
+      <View style={{ flexDirection: "row", margin: 10 }}>
+        <View
+          style={{
+            alignItems: "flex-end",
+            marginBottom: 10,
+            marginLeft: width * 0.7,
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("SearchScreen", { data: route.params.data })
+            }
+          >
+            <MaterialCommunityIcons
+              name="magnify"
+              size={50}
+              color={"#DDC2EF"}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 
-  const searchFunction = (query) => {
-    setSearch(query);
-  };
+  const renderItem = ({ item }) => {
+    return (
+      <View>
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity
+            // onPress={() => navigation.navigate("SavePost", { uri: item.Image })}
+            onPress={savePost}
+          >
+            <MaterialCommunityIcons name="star" size={40} color={"#D39ED8"} />
+          </TouchableOpacity>
+          <Text style={styles.collect}>Collect</Text>
+        </View>
 
-  return (
-    <SafeAreaView style={globalStyles.background}>
-      <FlatList
-        data={postList}
-        // keyExtractor={(item) => item.id.toString()}
-        // initialScrollIndex={route.params.initialScroll || 0}
-        style={{ marginBottom: height * 0.06 }}
-        contentContainerStyle={{ alignSelf: "center" }}
-        renderItem={({ item }) => (
+        <View>
           <TouchableOpacity style={styles.card}>
             <Image
               source={{ uri: item.Image }}
               style={styles.image}
               resizeMode="cover"
             />
+
             <Text style={styles.title}>{item.Title}</Text>
             <Text style={styles.text}>{item.Review}</Text>
           </TouchableOpacity>
-        )}
+        </View>
+
+        {/* <View
+          style={{
+            flexDirection: "row",
+            padding: 10,
+          }}
+        >
+          <MaterialCommunityIcons
+            name="heart-outline"
+            size={30}
+            color={"#D39ED8"}
+          />
+          <Text style={styles.like}>Like</Text>
+
+          <MaterialCommunityIcons
+            name="chat-outline"
+            size={30}
+            color={"#D39ED8"}
+          />
+          <Text style={styles.like}>Comment</Text>
+        </View> */}
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={globalStyles.background}>
+      <FlatList
+        data={route.params.data}
+        initialScrollIndex={route.params.initialScroll}
+        getItemLayout={(data, index) => ({
+          length: height * 0.6,
+          offset: height * 0.6 * index,
+          index,
+        })}
+        style={{ marginBottom: height * 0.06 }}
+        contentContainerStyle={{ alignSelf: "center" }}
+        ListHeaderComponent={HeaderComponent}
+        stickyHeaderIndices={[0]}
+        renderItem={renderItem}
       />
     </SafeAreaView>
   );
@@ -83,8 +180,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#00000000",
     marginBottom: width * 0.05,
     alignItems: "center",
-    // borderRadius: 10,
-    // backgroundColor: "white"
+    backgroundColor: "#E7D5E9",
+  },
+  header: {
+    fontFamily: "AbrilFatface_400Regular",
+    fontSize: 60,
+    color: "white",
+    backgroundColor: "#00000000",
   },
   text: {
     marginTop: width * 0.02,
@@ -103,5 +205,17 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     marginHorizontal: width * 0.01,
     alignSelf: "flex-start",
+  },
+  collect: {
+    margin: 10,
+    fontFamily: "Avenir",
+    fontSize: 15,
+    color: "#5D555E",
+    marginLeft: -2,
+  },
+  like: {
+    fontFamily: "Avenir",
+    fontSize: 15,
+    color: "#5D555E",
   },
 });
