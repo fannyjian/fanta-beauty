@@ -131,7 +131,6 @@ export default function Details({ navigation, route }) {
             color={"#D39ED8"}
           />
           <Text style={styles.like}>Like</Text>
-
           <MaterialCommunityIcons
             name="chat-outline"
             size={30}

@@ -6,7 +6,6 @@ import {
   Dimensions,
   FlatList,
   View,
-  ActivityIndicator,
   Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -15,13 +14,12 @@ import { globalStyles } from "../../styles/globalStyles";
 import { getAuth } from "firebase/auth";
 import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Ionicons } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.45;
 const imageH = height * 0.25;
 
-export default function Home({ navigation }) {
+export default function Home({navigation}) {
   const auth = getAuth();
   const user = auth.currentUser;
   const firestore = getFirestore();
@@ -34,9 +32,9 @@ export default function Home({ navigation }) {
     const posts = await collectionGroup(firestore, "posts");
     const querySnapshot = await getDocs(posts);
     querySnapshot.forEach((post) => {
-      data.push(post.data());
+      data.push(post.data())
     });
-    data.sort((a, b) => b.Date - a.Date);
+    data.sort((a, b) => b.Date - a.Date)
     setPostList(data);
     setIsFetching(false);
   };
@@ -63,11 +61,7 @@ export default function Home({ navigation }) {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("SearchScreen", { data: postList })
-            }
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen", {data: postList})}>
             <MaterialCommunityIcons
               name="magnify"
               size={50}
@@ -94,10 +88,7 @@ export default function Home({ navigation }) {
           <Pressable
             style={styles.card}
             onPress={() =>
-              navigation.navigate("Details", {
-                initialScroll: index,
-                data: postList,
-              })
+              navigation.navigate("Details", { initialScroll: index, data: postList })
             }
           >
             <Image

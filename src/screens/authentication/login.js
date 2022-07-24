@@ -64,11 +64,11 @@ export default function Login({navigation}) {
             </TouchableOpacity> 
 
             <TouchableOpacity style={globalStyles.button} onPress = {handleLogin} >
-                <Text style={globalStyles.avenirFont}>LOGIN</Text>
+                <Text style={styles.text}>login.</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-                <Text style={globalStyles.goBack} onPress = {() => navigation.goBack()}>Back to Welcome Page</Text>
+                <Text style={globalStyles.goBack} onPress = {() => navigation.goBack()}>Back to Welcome.</Text>
             </TouchableOpacity> 
             </KeyboardAwareScrollView>
 
@@ -92,5 +92,10 @@ const styles = StyleSheet.create({
         height: 50,
         fontSize: 13,
         fontFamily: "Avenir",
+    },
+    text: {
+        fontFamily: 'AbrilFatface_400Regular', 
+        color: '#F3E9F9',
+        fontSize: 20,
     },
   });

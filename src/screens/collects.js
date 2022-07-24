@@ -28,14 +28,16 @@ export default function Collects({ navigation }) {
   const imageListRef = ref(storage, "collects/" + user.uid + "/");
 
   const loadItems = () => {
+    const images = [];
     listAll(imageListRef).then((response) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
-          setImageList((prev) => [...prev, url]);
-          setIsFetching(false);
+          images.push(url);
         });
       });
     });
+    setImageList(images);
+    setIsFetching(false);
   };
 
   useEffect(() => {
@@ -70,7 +72,7 @@ export default function Collects({ navigation }) {
             }
           >
             <Image
-              source={{ uri: item.Image }}
+              source={{ uri: item }}
               style={styles.image}
               resizeMode="cover"
             />

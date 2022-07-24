@@ -18,28 +18,26 @@ import { Searchbar } from "react-native-paper";
 
 const { width, height } = Dimensions.get("screen");
 
-export default function Search({ route }) {
+export default function Search({route}) {
   const auth = getAuth();
   const user = auth.currentUser;
   const firestore = getFirestore();
 
   const [masterData, setMasterData] = useState(route.params.data);
   const [filteredData, setFilteredData] = useState(route.params.data);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   const searchFunction = (query) => {
     if (query) {
       const newData = masterData.filter((item) => {
-        const titleData = item.Title
-          ? item.Title.toUpperCase()
-          : "".toUpperCase();
+        const titleData = item.Title 
+                          ? item.Title.toUpperCase() 
+                          : ''.toUpperCase();
         const catData = item.Category
-          ? item.Category.toUpperCase()
-          : "".toUpperCase();
-        const textData = query.toUpperCase();
-        return (
-          titleData.indexOf(textData) > -1 || catData.indexOf(textData) > -1
-        );
+                          ? item.Category.toUpperCase() 
+                          : ''.toUpperCase();
+        const textData = query.toUpperCase()
+        return titleData.indexOf(textData) > -1 || catData.indexOf(textData) > -1;
       });
       setFilteredData(newData);
       setSearch(query);
@@ -47,17 +45,29 @@ export default function Search({ route }) {
       setFilteredData(masterData);
       setSearch(query);
     }
-  };
+  }
 
   return (
     <SafeAreaView style={globalStyles.background}>
-      <Searchbar
-        placeholder="searching for something?"
-        inputStyle={{ fontFamily: "Avenir" }}
-        style={{ width: width * 0.93, alignSelf: "center", margin: 20 }}
-        onChangeText={(query) => searchFunction(query)}
-        value={search}
-      />
+        <Searchbar
+            placeholder='searching for something?'
+            inputStyle = {{fontFamily: 'Avenir'}}
+            style = {{width: width * 0.93, alignSelf: 'center', margin: 20}}
+            onChangeText = {query => searchFunction(query)}
+            value = {search}
+        />
+
+        <FlatList 
+        data={filteredData}
+        style = {{marginBottom: height * 0.06}}
+        contentContainerStyle = {{ alignSelf:"center"}}
+        renderItem={({item}) => 
+            <TouchableOpacity style = {styles.card}>
+            <Image source={{uri : item.Image}} style={styles.image} resizeMode = "cover"/>
+            <Text style = {styles.title}>{item.Title}</Text>
+            <Text style = {styles.text}>{item.Review}</Text>
+            </TouchableOpacity>
+        }/>
 
       <FlatList
         data={filteredData}

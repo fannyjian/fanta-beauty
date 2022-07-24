@@ -34,9 +34,11 @@ export const globalStyles = StyleSheet.create({
       fontSize: 15,
     },
     goBack: {
-      marginTop: 10,
-      fontSize: 13,
-      fontFamily: "Avenir",
+      marginTop: 30,
+      fontSize: 17,
+      fontFamily: "AbrilFatface_400Regular",
+      color: "#DDC2EF",
+      alignSelf: "center",
     },
     button: {
       width: width * 0.75,

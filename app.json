@@ -4,12 +4,12 @@
     "slug": "fanta-beauty",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/fantalogo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/fantabeauty.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F3E9F9"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -31,6 +31,7 @@
     },
     "packagerOpts": {
       "sourceExts": ["cjs"]
-    }
+    },
+    "privacy" : "public"
   }
 }

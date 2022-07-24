@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
 
 // Imports for Firebase
 import { initializeApp } from 'firebase/app';
@@ -15,9 +16,10 @@ import LoggedOutNavigator from './src/navigation/loggedOutNavigation';
 import LoggedInNavigator from './src/navigation/loggedInNavigation';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UploadPost from './src/screens/uploadPost';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   let [fontsLoaded, error]= useFonts({
@@ -42,8 +44,10 @@ export default function App() {
     if (user) {
       const uid = user.uid;
       setIsLoggedIn(true);
+      setTimeout(() => SplashScreen.hideAsync(), 100)
     } else {
       setIsLoggedIn(false);
+      setTimeout(() => SplashScreen.hideAsync(), 100)
     }
   });
 
