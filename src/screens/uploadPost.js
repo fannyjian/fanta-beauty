@@ -1,34 +1,17 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  Modal,
-  TextInput,
-  Image,
-  Alert,
-  ScrollView,
-  Dimensions,
-} from "react-native";
+import {StyleSheet,Text,View,TouchableOpacity, SafeAreaView,Modal,TextInput,Image,Alert,Dimensions,} from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { getAuth } from "firebase/auth";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytes,
-} from "@firebase/storage";
+import {getDownloadURL,getStorage,ref,uploadBytes,} from "@firebase/storage";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-get-random-values";
 import { v4 } from "uuid";
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import DropDownPicker from "react-native-dropdown-picker";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+  
 export default function UploadPost() {
   const auth = getAuth();
   const user = auth.currentUser;
@@ -67,11 +50,12 @@ export default function UploadPost() {
     { label: "Necklaces", value: "Necklaces", parent: "Accessories" },
     { label: "Bracelets", value: "Bracelets", parent: "Accessories" },
     { label: "Rings", value: "Rings", parent: "Accessories" },
-    {
-      label: "Hair Accessories",
-      value: "Hair Accessories",
-      parent: "Accessories",
-    },
+    { label: "Hair Accessories", value: "Hair Accessories", parent: "Accessories"},
+    { label: "Bags", value: "Bags"},
+    { label: "Handbags", value: "Handbags", parent: "Bags" },
+    { label: "Backpack", value: "Backpack", parent: "Bags" },
+    { label: "Shoulder Bags", value: "Shoulder Bags", parent: "Bags" },
+    { label: "Wallets", value: "Wallets", parent: "Bags" },
     { label: "Others", value: "Others" },
   ]);
 
@@ -126,13 +110,16 @@ export default function UploadPost() {
     const bytes = await img.blob();
     await uploadBytes(storageRef, bytes);
     getDownloadURL(storageRef).then((url) => {
-      setDoc(doc(firestore, "reviews", user.uid, "posts", v4()), {
+      const docRef = doc(firestore, "reviews", user.uid, "posts", v4())
+      setDoc(docRef, {
         Image: url,
         Category: category,
         Title: title,
         Review: review,
         Date: new Date(),
         UserId: user.uid,
+        DocId: docRef.id,
+        Likes: 0
       });
     });
     navigation.navigate("HomeScreens");
@@ -244,7 +231,7 @@ export default function UploadPost() {
           <View style={styles.titleInput}>
             <TextInput
               style={globalStyles.TextInput}
-              placeholder="  Add title."
+              placeholder="Add title."
               autoCapitalize="none"
               placeholderTextColor="grey"
               autoCorrect={false}
@@ -256,7 +243,7 @@ export default function UploadPost() {
           <View style={styles.reviewInput}>
             <TextInput
               style={globalStyles.TextInput}
-              placeholder="  Enter your review."
+              placeholder=" Enter your review."
               autoCapitalize="none"
               placeholderTextColor="grey"
               autoCorrect={true}
@@ -293,6 +280,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     alignItems: "center",
     flexWrap: "wrap",
+    padding: 10,
   },
   reviewInput: {
     backgroundColor: "white",
@@ -302,6 +290,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
     flexWrap: "wrap",
+    paddingHorizontal: 10,
   },
   saveChanges: {
     width: "70%",

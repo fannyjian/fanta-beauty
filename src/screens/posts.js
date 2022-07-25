@@ -17,7 +17,7 @@ import {
   const imageW = width * 0.45;
   const imageH = height * 0.25;
   
-  export default function Collects({navigation}) {
+  export default function Posts({navigation}) {
     const auth = getAuth();
     const user = auth.currentUser;
     const firestore = getFirestore();
@@ -27,7 +27,7 @@ import {
   
     const loadItems = async () => {
       const data = [];
-      const posts = await collection(firestore, "saved", user.uid, "savedPosts");
+      const posts = await collection(firestore, "reviews", user.uid, "posts");
       const querySnapshot = await getDocs(posts);
       querySnapshot.forEach((post) => {
         data.push(post.data())
@@ -49,7 +49,7 @@ import {
   
     const HeaderComponent = () => (
       <View>
-        <Text style={styles.header}>Collects.</Text>
+        <Text style={styles.header}>Posts.</Text>
     </View>
     );
   
@@ -68,7 +68,7 @@ import {
             <Pressable
               style={styles.card}
               onPress={() =>
-                navigation.navigate("SavedScreen", { initialScroll: index, data: postList})
+                navigation.navigate("MyDetailsScreen", { initialScroll: index, data: postList})
               }
             >
               <Image

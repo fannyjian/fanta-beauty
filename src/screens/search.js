@@ -1,27 +1,14 @@
-import {
-  StyleSheet,
-  Text,
-  Image,
-  SafeAreaView,
-  Dimensions,
-  FlatList,
-  View,
-  ActivityIndicator,
-} from "react-native";
-import React, { useState, useEffect } from "react";
+import {StyleSheet,Text,Image,SafeAreaView,Dimensions,FlatList} from "react-native";
+import React, { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { globalStyles } from "../../styles/globalStyles";
 import { getAuth } from "firebase/auth";
-import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Searchbar } from "react-native-paper";
 
 const { width, height } = Dimensions.get("screen");
 
 export default function Search({route}) {
   const auth = getAuth();
-  const user = auth.currentUser;
-  const firestore = getFirestore();
 
   const [masterData, setMasterData] = useState(route.params.data);
   const [filteredData, setFilteredData] = useState(route.params.data);
@@ -56,18 +43,6 @@ export default function Search({route}) {
             onChangeText = {query => searchFunction(query)}
             value = {search}
         />
-
-        <FlatList 
-        data={filteredData}
-        style = {{marginBottom: height * 0.06}}
-        contentContainerStyle = {{ alignSelf:"center"}}
-        renderItem={({item}) => 
-            <TouchableOpacity style = {styles.card}>
-            <Image source={{uri : item.Image}} style={styles.image} resizeMode = "cover"/>
-            <Text style = {styles.title}>{item.Title}</Text>
-            <Text style = {styles.text}>{item.Review}</Text>
-            </TouchableOpacity>
-        }/>
 
       <FlatList
         data={filteredData}

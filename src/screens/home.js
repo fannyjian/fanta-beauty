@@ -88,7 +88,7 @@ export default function Home({navigation}) {
           <Pressable
             style={styles.card}
             onPress={() =>
-              navigation.navigate("Details", { initialScroll: index, data: postList })
+              navigation.navigate("DetailsScreen", { initialScroll: index, data: postList})
             }
           >
             <Image
