@@ -26,10 +26,10 @@ import {StyleSheet, Text,Image,SafeAreaView,Dimensions,FlatList,View} from "reac
       updateDoc(doc(firestore, "reviews", user.uid, "posts", item.DocId), {
         Likes: item.Likes + 1
       });
-      updateDoc(doc(firestore, "saved", user.uid, "savedPosts", item.DocId), {
+      updateDoc(doc(firestore, "saved", item.UserId, "savedPosts", item.DocId), {
         Likes: item.Likes + 1
       }).catch((error) => 
-        updateDoc(doc(firestore, "reviews", user.uid, "posts", item.DocId), {
+        updateDoc(doc(firestore, "reviews", item.UserId, "posts", item.DocId), {
           Likes: item.Likes + 1
         })
       );
@@ -39,10 +39,10 @@ import {StyleSheet, Text,Image,SafeAreaView,Dimensions,FlatList,View} from "reac
       updateDoc(doc(firestore, "reviews", user.uid, "posts", item.DocId), {
         Likes: item.Likes - 1
       });
-      updateDoc(doc(firestore, "saved", user.uid, "savedPosts", item.DocId), {
+      updateDoc(doc(firestore, "saved", item.UserId, "savedPosts", item.DocId), {
         Likes: item.Likes - 1
       }).catch((error) => 
-      updateDoc(doc(firestore, "reviews", user.uid, "posts", item.DocId), {
+      updateDoc(doc(firestore, "saved", item.UserId, "savedPosts", item.DocId), {
         Likes: item.Likes + 1
       })
       );

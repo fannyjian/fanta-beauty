@@ -48,11 +48,11 @@ export default function Details({ navigation, route }) {
     updateDoc(doc(firestore, "saved", user.uid, "savedPosts", item.DocId), {
       Likes: item.Likes + 1
     }).catch((error) => 
-      updateDoc(doc(firestore, "reviews", user.uid, "posts", item.DocId), {
+      updateDoc(doc(firestore, "reviews", item.UserId, "posts", item.DocId), {
         Likes: item.Likes + 1
       }));
 
-    updateDoc(doc(firestore, "reviews", user.uid, "posts", item.DocId), {
+    updateDoc(doc(firestore, "reviews", item.UserId, "posts", item.DocId), {
       Likes: item.Likes + 1
     });
   }
@@ -61,11 +61,11 @@ export default function Details({ navigation, route }) {
     updateDoc(doc(firestore, "saved", user.uid, "savedPosts", item.DocId), {
       Likes: item.Likes - 1
     }).catch((error) => 
-    updateDoc(doc(firestore, "reviews", user.uid, "posts", item.DocId), {
-      Likes: item.Likes + 1
+    updateDoc(doc(firestore, "reviews", item.UserId, "posts", item.DocId), {
+      Likes: item.Likes - 1
     }));
 
-    updateDoc(doc(firestore, "reviews", user.uid, "posts", item.DocId), {
+    updateDoc(doc(firestore, "reviews", item.UserId, "posts", item.DocId), {
       Likes: item.Likes - 1
     });
   }
