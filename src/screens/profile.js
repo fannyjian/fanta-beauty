@@ -89,7 +89,7 @@ export default function Profile() {
           <AppButton
             title="Collects"
             backgroundColor="#007bff"
-            onPress={() => Alert.alert("This page is not available yet😭")}
+            onPress={() => navigation.navigate("CollectsScreen")}
           />
         </View>
 
@@ -97,7 +97,7 @@ export default function Profile() {
           <AppButton
             title="Posts"
             backgroundColor="#007bff"
-            onPress={() => navigation.navigate("CollectsScreen")}
+            onPress={() => navigation.navigate("PostsScreen")}
           />
         </View>
 

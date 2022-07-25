@@ -16,6 +16,8 @@ import LoggedOutNavigator from './src/navigation/loggedOutNavigation';
 import LoggedInNavigator from './src/navigation/loggedInNavigation';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UploadPost from './src/screens/uploadPost';
+import Comments from './src/screens/comments';
+import EditPost from './src/screens/editPost';
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +62,8 @@ export default function App() {
             : <Stack.Navigator screenOptions={{headerShown: false}} component = 'Main'>
               <Stack.Screen name = "Main" component={LoggedInNavigator}/>
               <Stack.Screen name = "Upload" component = {UploadPost} options={{presentation: 'modal'}}/>
+              <Stack.Screen name = "Comments" component = {Comments} options={{presentation: 'modal'}}/>
+              <Stack.Screen name='Edit' component={EditPost} options={{presentation: 'modal'}}/>
             </Stack.Navigator>
 
             }

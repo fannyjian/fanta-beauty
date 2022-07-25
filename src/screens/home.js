@@ -6,7 +6,6 @@ import {
   Dimensions,
   FlatList,
   View,
-  ActivityIndicator,
   Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -15,17 +14,15 @@ import { globalStyles } from "../../styles/globalStyles";
 import { getAuth } from "firebase/auth";
 import { getDocs, getFirestore, collectionGroup } from "firebase/firestore";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("screen");
 const imageW = width * 0.45;
 const imageH = height * 0.25;
 
-export default function Home() {
+export default function Home({navigation}) {
   const auth = getAuth();
   const user = auth.currentUser;
   const firestore = getFirestore();
-  const navigation = useNavigation();
 
   const [isFetching, setIsFetching] = useState(false);
   const [postList, setPostList] = useState([]);
@@ -37,6 +34,7 @@ export default function Home() {
     querySnapshot.forEach((post) => {
       data.push(post.data())
     });
+    data.sort((a, b) => b.Date - a.Date)
     setPostList(data);
     setIsFetching(false);
   };
@@ -63,7 +61,7 @@ export default function Home() {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SearchScreen", {data: postList})}>
             <MaterialCommunityIcons
               name="magnify"
               size={50}
@@ -79,7 +77,6 @@ export default function Home() {
     <SafeAreaView style={globalStyles.background}>
       <FlatList
         data={postList}
-        // keyExtractor={(item) => item.id.toString()}
         onRefresh={onRefresh}
         numColumns={2}
         refreshing={isFetching}
@@ -91,7 +88,7 @@ export default function Home() {
           <Pressable
             style={styles.card}
             onPress={() =>
-              navigation.navigate("Details", { initialScroll: index })
+              navigation.navigate("DetailsScreen", { initialScroll: index, data: postList})
             }
           >
             <Image
@@ -99,6 +96,7 @@ export default function Home() {
               style={styles.image}
               resizeMode="cover"
             />
+
             <Text style={styles.title}>{item.Title}</Text>
           </Pressable>
         )}
