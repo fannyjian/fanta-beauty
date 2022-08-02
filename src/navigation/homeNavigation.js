@@ -4,7 +4,7 @@ import Home from "../screens/home";
 import Search from "../screens/search";
 import Details from "../screens/details";
 import Collects from "../screens/collects";
-import Comments from "../screens/comments";
+import SavedDetails from "../screens/savedDetails"
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +18,7 @@ export default function HomeNavigator({route}) {
       <Stack.Screen name="SearchScreen" component={Search}/>
       <Stack.Screen name="DetailsScreen" component={Details} />
       <Stack.Screen name="CollectsScreen" component={Collects} />
-      {/* <Stack.Screen name="CommentsScreen" component={Comments}/> */}
+      <Stack.Screen name="SavedScreen" component={SavedDetails} />
     </Stack.Navigator>
   );
 }

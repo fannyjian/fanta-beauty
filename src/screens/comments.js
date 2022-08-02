@@ -22,7 +22,7 @@ export default function Comments({route}) {
         const querySnapshot = await getDocs(commentsRef);
         querySnapshot.forEach((comment) => {
             data.push(comment.data())
-        });
+        })
         data.sort((a, b) => b.Date - a.Date)
         setComments(data);
         setPost(route.params.post)
