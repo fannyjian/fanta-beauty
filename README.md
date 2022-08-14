@@ -132,8 +132,11 @@ Stores all the reviews saved by the users for easy reference in the future, whic
 
 ## Technical Proof of Concept
 
-Link to description of Tech Stack used: https://docs.google.com/document/d/198MBfnA6KMAr3YsJ7cM8suFIGEvaShGcM-cEtEkArRA/edit?usp=sharing
-Link to project log: https://docs.google.com/spreadsheets/d/1Lp1HPgjh0Dkar_3UaXJ6fq-gnDC95QQItQz-I0RTJNY/edit?usp=sharing
+### Tech Stack
+https://docs.google.com/document/d/198MBfnA6KMAr3YsJ7cM8suFIGEvaShGcM-cEtEkArRA/edit?usp=sharing
+
+### Project log
+https://docs.google.com/spreadsheets/d/1Lp1HPgjh0Dkar_3UaXJ6fq-gnDC95QQItQz-I0RTJNY/edit?usp=sharing
 
 ### Executing the program
 
